@@ -62,34 +62,49 @@ global oweatherNames := ["EXTRASUNNY_LA", "SUNNY_LA", "EXTRASUNNY_SMOG_LA", "SUN
 
 ; ########################## SAMP addresses ##########################
 
-global ADDR_SAMP_INCHAT_PTR                 := [0x21A10C, 0x21A114, 0x2ACA3C]
-global ADDR_SAMP_INCHAT_PTR_OFF             := [0x55, 0x60, 0x60]
-global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A77, 0x2AC187]
+; SAMPAPI_VAR CGame*& RefGame() 
+global ADDR_SAMP_INCHAT_PTR                 := [0x26EBAC, 0x21A10C, 0x21A114, 0x2ACA3C]
+; TODO verify offset
+global ADDR_SAMP_INCHAT_PTR_OFF             := [0x55, 0x55, 0x60, 0x60]
+global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A6F, 0x219A77, 0x2AC187]
 
-global ADDR_SAMP_SERVERNAME                 := [0x121, 0x11D, 0x131]
-global ADDR_SAMP_SERVERIP                   := [0x20, 0x1C, 0x30]
-global ADDR_SAMP_SERVERPORT                 := [0x225, 0x221, 0x235]
-global ADDR_SAMP_VEHPOOL                    := [0x1C, 0xC, 0xC]
+; TODO verify offsets
+global ADDR_SAMP_SERVERNAME                 := [0x121, 0x121, 0x11D, 0x131]
+global ADDR_SAMP_SERVERIP                   := [0x20, 0x20, 0x1C, 0x30]
+global ADDR_SAMP_SERVERPORT                 := [0x225, 0x225, 0x221, 0x235]
+global ADDR_SAMP_VEHPOOL                    := [0x1C, 0x1C, 0xC, 0xC]
 
-global SAMP_SCOREBOARD_INFO_PTR 	    := [0x21A0B4, 0x21A0BC, 0x2AC9DC]
+; SAMPAPI_VAR CScoreboard*& RefScoreboard()
+global SAMP_SCOREBOARD_INFO_PTR 	        := [0x26EB4C, 0x21A0B4, 0x21A0BC, 0x2AC9DC]
 
-global SAMP_REMOTEPLAYERDATA_OFFSET         := [0x0, 0xC, 0x8]
-global SAMP_REMOTEPLAYERDATA_ACTOR          := [0x0, 0x1C, 0x4]
-global SAMP_REMOTEPLAYERDATA_PED            := [0x25C, 0x40, 0x40]
-global SAMP_REMOTEPLAYERDATA_HEALTH	    := [0x1BC, 0x1BC, 0x1B0]
-global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1B8, 0x1AC, 0x1AC]
-global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x2A4, 0x17C, 0x120]
-global SAMP_REMOTEPLAYERDATA_POS            := [0x2A4, 0x2A, 0x42]
-global FUNC_SAMP_SETCHECKPOINT              := [0x9D340, 0x9D3F0, 0xA1C00]
-global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x4D, 0x4D]
+; TODO verify offsets
+global SAMP_REMOTEPLAYERDATA_OFFSET         := [0x0, 0x0, 0xC, 0x8]
+global SAMP_REMOTEPLAYERDATA_ACTOR          := [0x0, 0x0, 0x1C, 0x4]
+global SAMP_REMOTEPLAYERDATA_PED            := [0x25C, 0x25C, 0x40, 0x40]
+global SAMP_REMOTEPLAYERDATA_HEALTH	        := [0x1BC, 0x1BC, 0x1BC, 0x1B0]
+global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1B8, 0x1B8, 0x1AC, 0x1AC]
+global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x2A4, 0x2A4, 0x17C, 0x120]
+global SAMP_REMOTEPLAYERDATA_POS            := [0x2A4, 0x2A4, 0x2A, 0x42]
 
-global FUNC_SAMP_SENDCMD                    := [0x65C60, 0x65D30, 0x69340]
-global FUNC_SAMP_SENDSAY                    := [0x57F0, 0x57E0, 0x5860]
-global FUNC_SAMP_ADDTOCHATWND               := [0x64520, 0x645F0, 0x67B60]
-global ADDR_SAMP_CHATMSG_PTR                := [0x21A0E4, 0x21A0EC, 0x2ACA10]
-global FUNC_SAMP_SHOWGAMETEXT               := [0x9C2C0, 0x9C370, 0xA0B20]
-global FUNC_SAMP_PLAYAUDIOSTR               := [0x62DA0, 0x62E70, 0x663E0]
-global FUNC_SAMP_STOPAUDIOSTR               := [0x629A0, 0x62A70, 0x65FE0]
+; void CGame::SetCheckpoint(CVector* pPos, CVector* pSize)
+global FUNC_SAMP_SETCHECKPOINT              := [0xA1DE0, 0x9D340, 0x9D3F0, 0xA1C00]
+; TODO verify offset
+global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x24, 0x4D, 0x4D]
+
+; void CInput::Send(const char* szString)
+global FUNC_SAMP_SENDCMD                    := [0x69900, 0x65C60, 0x65D30, 0x69340] 
+; void CLocalPlayer::Chat(const char* szText)
+global FUNC_SAMP_SENDSAY                    := [0x5A10, 0x57F0, 0x57E0, 0x5860]
+; void CChat::AddChatMessage(const char* szPrefix, D3DCOLOR prefixColor, const char* szText) 
+global FUNC_SAMP_ADDTOCHATWND               := [0x68020, 0x64520, 0x645F0, 0x67B60]
+; SAMPAPI_VAR CChat*& RefChat() 
+global ADDR_SAMP_CHATMSG_PTR                := [0x26EB80, 0x21A0E4, 0x21A0EC, 0x2ACA10]
+; void CGame::DisplayGameText(const char* szText, int nTime, int nSize)
+global FUNC_SAMP_SHOWGAMETEXT               := [0xA0CE0, 0x9C2C0, 0x9C370, 0xA0B20]
+; BOOL CAudioStream::Play(const char* szUrl, CVector position, float fRadius, bool bIs3d)
+global FUNC_SAMP_PLAYAUDIOSTR               := [0x66960, 0x62DA0, 0x62E70, 0x663E0]
+; BOOL CAudioStream::Stop(bool bWait)
+global FUNC_SAMP_STOPAUDIOSTR               := [0x66560, 0x629A0, 0x62A70, 0x65FE0]
 
 ; ########################## Dialog styles ##########################
 global DIALOG_STYLE_MSGBOX                  := 0
@@ -101,7 +116,8 @@ global DIALOG_STYLE_TABLIST_HEADERS         := 5
 
 
 ; ######################### Dialog structure #########################
-global SAMP_DIALOG_STRUCT_PTR               := [0x21A0B8, 0x21A0C0, 0x2AC9E0]
+; SAMPAPI_VAR CDialog*& RefDialog()
+global SAMP_DIALOG_STRUCT_PTR               := [0x26EB50, 0x21A0B8, 0x21A0C0, 0x2AC9E0]
 global SAMP_DIALOG_PTR1_OFFSET              := 0x1C
 global SAMP_DIALOG_LINES_OFFSET             := 0x44C
 global SAMP_DIALOG_INDEX_OFFSET             := 0x443
@@ -114,8 +130,10 @@ global SAMP_DIALOG_STYLE_OFFSET             := 0x2C
 global SAMP_DIALOG_ID_OFFSET                := 0x30
 global SAMP_DIALOG_TEXT_PTR_OFFSET          := 0x34
 global SAMP_DIALOG_CAPTION_OFFSET           := 0x40
-global FUNC_SAMP_SHOWDIALOG                 := [0x6B9C0, 0x6BA70, 0x6FA50]
-global FUNC_SAMP_CLOSEDIALOG                := [0x6C040, 0x6B2C0, 0x6F2A0]
+; void CDialog::Show(int nId, int nType, const char* szCaption, const char* szText, const char* szLeftButton, const char* szRightButton, BOOL bServerside)
+global FUNC_SAMP_SHOWDIALOG                 := [0x6FFB0, 0x6B9C0, 0x6BA70, 0x6FA50]
+; void CDialog::Close(char nProcessButton)
+global FUNC_SAMP_CLOSEDIALOG                := [0x70630, 0x6C040, 0x6B2C0, 0x6F2A0]
 
 
 ; ######################### Scoreboard #########################
