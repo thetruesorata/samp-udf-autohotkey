@@ -3532,7 +3532,7 @@ checkHandles() {
 
 ; internal stuff
 refreshGTA() {
-    newPID := getPID("GTA:SA:MP (0.3.7-R5-2-MP)")
+    newPID := getPID("GTA:SA:MP")
     if(!newPID) {                            ; GTA not found
         if(hGTA) {                            ; open handle
             virtualFreeEx(hGTA, pMemory, 0, 0x8000)
