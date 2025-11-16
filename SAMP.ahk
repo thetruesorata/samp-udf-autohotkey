@@ -65,7 +65,7 @@ global oweatherNames := ["EXTRASUNNY_LA", "SUNNY_LA", "EXTRASUNNY_SMOG_LA", "SUN
 ; SAMPAPI_VAR CGame*& RefGame() 
 global ADDR_SAMP_INCHAT_PTR                 := [0x26EBAC, 0x21A10C, 0x21A114, 0x2ACA3C]
 ; TODO verify offset
-global ADDR_SAMP_INCHAT_PTR_OFF             := [0x55, 0x55, 0x60, 0x60]
+global ADDR_SAMP_INCHAT_PTR_OFF             := [0x60, 0x55, 0x60, 0x60]
 global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A6F, 0x219A77, 0x2AC187]
 
 ; TODO verify offsets
