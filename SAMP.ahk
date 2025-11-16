@@ -91,15 +91,11 @@ global FUNC_SAMP_SETCHECKPOINT              := [0xA1DE0, 0x9D340, 0x9D3F0, 0xA1C
 ; TODO verify offset
 global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x24, 0x4D, 0x4D]
 
-; void CInput::Send(const char* szString)
 global FUNC_SAMP_SENDCMD                    := [0x69900, 0x65C60, 0x65D30, 0x69340] 
-; void CLocalPlayer::Chat(const char* szText)
 global FUNC_SAMP_SENDSAY                    := [0x5A10, 0x57F0, 0x57E0, 0x5860]
-; void CChat::AddChatMessage(const char* szPrefix, D3DCOLOR prefixColor, const char* szText) 
-global FUNC_SAMP_ADDTOCHATWND               := [0x68020, 0x64520, 0x645F0, 0x67B60]
+global FUNC_SAMP_ADDTOCHATWND               := [0x68070, 0x64520, 0x645F0, 0x67B60]
 ; SAMPAPI_VAR CChat*& RefChat() 
 global ADDR_SAMP_CHATMSG_PTR                := [0x26EB80, 0x21A0E4, 0x21A0EC, 0x2ACA10]
-; void CGame::DisplayGameText(const char* szText, int nTime, int nSize)
 global FUNC_SAMP_SHOWGAMETEXT               := [0xA0CE0, 0x9C2C0, 0x9C370, 0xA0B20]
 ; BOOL CAudioStream::Play(const char* szUrl, CVector position, float fRadius, bool bIs3d)
 global FUNC_SAMP_PLAYAUDIOSTR               := [0x66960, 0x62DA0, 0x62E70, 0x663E0]
@@ -137,34 +133,40 @@ global FUNC_SAMP_CLOSEDIALOG                := [0x70630, 0x6C040, 0x6B2C0, 0x6F2
 
 
 ; ######################### Scoreboard #########################
+; void CNetGame::UpdatePlayers()
+global FUNC_UPDATESCOREBOARD                := [0x8F10, 0x8A10, 0x8A20, 0x8C00]
+; SAMPAPI_VAR CNetGame*& RefNetGame()
+global SAMP_INFO_OFFSET                     := [0x26EB94, 0x21A0F8, 0x21A100, 0x2ACA24]
+; TODO find out
+global ADDR_SAMP_CRASHREPORT                := [0, 0x5CF2C, 0x5D00C, 0x604CC]
+global SAMP_PPOOLS_OFFSET                   := [0x3DE, 0x3CD, 0x3C5, 0x3DE]
+global SAMP_PPOOL_PLAYER_OFFSET             := [0x8, 0x18, 0x8, 0x8]
 
-global FUNC_UPDATESCOREBOARD                := [0x8A10, 0x8A20, 0x8C00]
-global SAMP_INFO_OFFSET                     := [0x21A0F8, 0x21A100, 0x2ACA24]
-global ADDR_SAMP_CRASHREPORT                := [0x5CF2C, 0x5D00C, 0x604CC]
-global SAMP_PPOOLS_OFFSET                   := [0x3CD, 0x3C5, 0x3DE]
-global SAMP_PPOOL_PLAYER_OFFSET             := [0x18, 0x8, 0x8]
+; TODO verify all offsets
+global SAMP_SLOCALPLAYERID_OFFSET           := [0x4, 0x4, 0x0, 0x0]
+global SAMP_ISTRLEN_LOCALPLAYERNAME_OFFSET  := [0x22, 0x1A, 0x16, 0x16]
+global SAMP_SZLOCALPLAYERNAME_OFFSET        := [0x12, 0xA, 0x6, 0x6]
+global SAMP_PSZLOCALPLAYERNAME_OFFSET       := [0x12, 0xA, 0x6, 0x6]
+global SAMP_ILOCALPLAYERPING_OFFSET         := [0x30, 0x26, 0x2F36, 0x2F36]
+global SAMP_ILOCALPLAYERSCORE_OFFSET        := [0x34, 0x2A, 0x2F3A, 0x2F3A]
 
-global SAMP_SLOCALPLAYERID_OFFSET           := [0x4, 0x0, 0x0]
-global SAMP_ISTRLEN_LOCALPLAYERNAME_OFFSET  := [0x1A, 0x16, 0x16]
-global SAMP_SZLOCALPLAYERNAME_OFFSET        := [0xA, 0x6, 0x6]
-global SAMP_PSZLOCALPLAYERNAME_OFFSET       := [0xA, 0x6, 0x6]
-global SAMP_ILOCALPLAYERPING_OFFSET         := [0x26, 0x2F36, 0x2F36]
-global SAMP_ILOCALPLAYERSCORE_OFFSET        := [0x2A, 0x2F3A, 0x2F3A]
-
-global SAMP_PREMOTEPLAYER_OFFSET            := [0x2E, 0x26, 0x26]
-global SAMP_ISTRLENNAME___OFFSET            := [0x1C, 0x24, 0x24]
-global SAMP_SZPLAYERNAME_OFFSET             := [0xC, 0x14, 0x14]
-global SAMP_PSZPLAYERNAME_OFFSET            := [0xC, 0x14, 0x14]
-global SAMP_IPING_OFFSET                    := [0x28, 0x4, 0xC]
-global SAMP_ISCORE_OFFSET                   := [0x24, 0x0, 0x0]
-global SAMP_ISNPC_OFFSET                    := [0x4, 0x8, 0x4]
+global SAMP_PREMOTEPLAYER_OFFSET            := [0x1F8A, 0x2E, 0x26, 0x26]
+; TODO find out
+global SAMP_ISTRLENNAME___OFFSET            := [0x24, 0x1C, 0x24, 0x24]
+global SAMP_SZPLAYERNAME_OFFSET             := [0x18, 0xC, 0x14, 0x14]
+global SAMP_PSZPLAYERNAME_OFFSET            := [0x18, 0xC, 0x14, 0x14]
+global SAMP_IPING_OFFSET                    := [0xC, 0x28, 0x4, 0xC]
+; TODO find out
+global SAMP_ISCORE_OFFSET                   := [0x0, 0x24, 0x0, 0x0]
+global SAMP_ISNPC_OFFSET                    := [0x8, 0x4, 0x8, 0x4]
 
 global SAMP_PLAYER_MAX                      := 1004
 
 
 ; ######################### Checkpoints #########################
-global ADDR_CP_CHECK                        := 0xC7DEEA
-global ADDR_REDMARKER                       := [0xC7DEC8, 0xC7DECC, 0xC7DED0]
+global ADDR_CP_CHECK                        := 0xC7DEEA3
+; TODO find out
+global ADDR_REDMARKER                       := [0xC7DED0, 0xC7DEC8, 0xC7DECC, 0xC7DED0]
 
 
 ; ######################### Sizes #########################
@@ -3530,7 +3532,7 @@ checkHandles() {
 
 ; internal stuff
 refreshGTA() {
-    newPID := getPID("GTA:SA:MP")
+    newPID := getPID("GTA:SA:MP (0.3.7-R5-2-MP)")
     if(!newPID) {                            ; GTA not found
         if(hGTA) {                            ; open handle
             virtualFreeEx(hGTA, pMemory, 0, 0x8000)
@@ -3571,7 +3573,8 @@ refreshSAMP() {
         return false
 
     versionByte := readMem(hGTA, dwSAMP + 0x1036, 1, "UChar")
-    sampVersion := versionByte == 0xD8 ? 1 : (versionByte == 0xA8 ? 2 : (versionByte == 0x78 ? 3 : 0))
+    ; TODO fix
+    sampVersion := 1 ; versionByte == 0xD8 ? 1 : (versionByte == 0xA8 ? 2 : (versionByte == 0x78 ? 3 : 0))
     if (!sampVersion)
     	return false
 
