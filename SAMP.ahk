@@ -138,7 +138,7 @@ global FUNC_UPDATESCOREBOARD                := [0x8F10, 0x8A10, 0x8A20, 0x8C00]
 ; SAMPAPI_VAR CNetGame*& RefNetGame()
 global SAMP_INFO_OFFSET                     := [0x26EB94, 0x21A0F8, 0x21A100, 0x2ACA24]
 ; TODO find out
-global ADDR_SAMP_CRASHREPORT                := [0, 0x5CF2C, 0x5D00C, 0x604CC]
+global ADDR_SAMP_CRASHREPORT                := [0x03F6, 0x5CF2C, 0x5D00C, 0x604CC]
 global SAMP_PPOOLS_OFFSET                   := [0x3DE, 0x3CD, 0x3C5, 0x3DE]
 global SAMP_PPOOL_PLAYER_OFFSET             := [0x4, 0x18, 0x8, 0x8]
 
