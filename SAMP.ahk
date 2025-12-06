@@ -3102,8 +3102,8 @@ GetPlayerColor(playerId) {
         return defaultColor
     }
 
-    hexCode := intToHex(idColor)
-    rgbhex := SubStr(intToHex(idColor), 3, 6)
+    hexCode := _intToHex(idColor)
+    rgbhex := SubStr(_intToHex(idColor), 3, 6)
     if (StrLen(hexCode) = 6){
         rgbhex := "0000" rgbhex
         StringTrimRight, rgbhex, rgbhex, 2
@@ -3116,7 +3116,7 @@ GetPlayerColor(playerId) {
     return playercolor
 }
 
-intToHex(int)
+_intToHex(int)
 {
     CurrentFormat := A_FormatInteger
     SetFormat, integer, hex
