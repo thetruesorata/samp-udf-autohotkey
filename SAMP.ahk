@@ -85,6 +85,9 @@ global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1AC, 0x1B8, 0x1AC, 0x1AC]
 global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x17C, 0x2A4, 0x17C, 0x120]
 global SAMP_REMOTEPLAYERDATA_POS            := [0x17C, 0x2A4, 0x2A, 0x42]
 
+global SIZE_SAMP_CHATMSG                    := 0xFC
+global SAMP_PLAYER_COLOR_OFFSET 			:= [0x151828, 0x216378, 0x216380, 0x18F6C0]
+
 ; void CGame::SetCheckpoint(CVector* pPos, CVector* pSize)
 global FUNC_SAMP_SETCHECKPOINT              := [0xA1DE0, 0x9D340, 0x9D3F0, 0xA1C00]
 ; TODO verify offset
@@ -196,12 +199,12 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; # SAMP-Funktionen:                                                                                                            #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
-; #     - IsSAMPAvailable()                         Prüft, ob man in den Chat schreiben kann & ob GTA geladen ist               #
-; #     - IsInChat()                                Prüft, ob der Spieler gerade chattet oder in einem Dialog ist               #
+; #     - IsSAMPAvailable()                         Prï¿½ft, ob man in den Chat schreiben kann & ob GTA geladen ist               #
+; #     - IsInChat()                                Prï¿½ft, ob der Spieler gerade chattet oder in einem Dialog ist               #
 ; #     - GetPlayerName()                           Liest den Namen des Spielers aus                                            #
 ; #     - GetPlayerId()                             Liest die ID des Spielers aus                                               #
 ; #     - SendChat(wText)                           Sendet eine Nachricht oder einen Befehl direkt an den Server                #
-; #     - AddChatMessage(wText)                     Fügt eine Zeile in den Chat ein (nur für den Spieler sichtbar)              #
+; #     - AddChatMessage(wText)                     Fï¿½gt eine Zeile in den Chat ein (nur fï¿½r den Spieler sichtbar)              #
 ; #     - ShowGameText(wText, dwTime, dwTextstyle)  Zeigt einen Text inmitten des Bildschirmes an                               #
 ; #     - PlayAudioStream(wUrl)                     Spielt einen "Audio Stream" ab                                              #
 ; #     - StopAudioStream()                         Stoppt den aktuellen Audio Stream                                           #
@@ -219,8 +222,8 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; #                                                                                                                             #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
-; #     - GetWeatherId()                            Gibt die aktuelle Wetter ID zurück                                          #
-; #     - GetWeatherName()                          Gibt den aktuellen Wetternamen zurück                                       #
+; #     - GetWeatherId()                            Gibt die aktuelle Wetter ID zurï¿½ck                                          #
+; #     - GetWeatherName()                          Gibt den aktuellen Wetternamen zurï¿½ck                                       #
 ; #                                                                                                                             #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
@@ -231,17 +234,17 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; # SAMP Dialog Funktionen (v0.3.7):                                                                                            #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
-; #     - IsDialogOpen()                            Prüft, ob gerade ein Dialog angezeigt wird (gibt true oder false zurück)    #
+; #     - IsDialogOpen()                            Prï¿½ft, ob gerade ein Dialog angezeigt wird (gibt true oder false zurï¿½ck)    #
 ; #     - GetDialogStyle()                          Liest den Typ des (zuletzt) angezeigten Dialogs aus (0-5)                   #
 ; #     - GetDialogId()                             Liest die ID des (zuletzt) angezeigten Dialogs aus (auch vom Server)        #
 ; #     - SetDialogId(id)                           Setzt die ID des (zuletzt) angezeigten Dialogs                              #
-; #     - GetDialogIndex()                          Liest die (zuletzt) ausgewählte Zeile des Dialogs aus                       #
-; #     - GetDialogCaption()                        Liest die Überschrift des (zuletzt) angezeigten Dialogs aus                 #
+; #     - GetDialogIndex()                          Liest die (zuletzt) ausgewï¿½hlte Zeile des Dialogs aus                       #
+; #     - GetDialogCaption()                        Liest die ï¿½berschrift des (zuletzt) angezeigten Dialogs aus                 #
 ; #     - GetDialogText()                           Liest den Text des (zuletzt) angezeigten Dialogs aus (auch bei Listen)      #
 ; #     - GetDialogLineCount()                      Liest die Anzahl der Zeilen/Items des (zuletzt) angezeigten Dialogs aus     #
 ; #     - GetDialogLine(index)                      Liest die Zeile an der Stelle [index] mittels GetDialogText aus             #
-; #     - GetDialogLines__()                          Liest die Zeilen mittels GetDialogText aus (gibt ein Array zurück)          #
-; #     - IsDialogButton1Selected()                 Prüft, ob Button1 des Dialogs ausgewählt ist                                #
+; #     - GetDialogLines__()                          Liest die Zeilen mittels GetDialogText aus (gibt ein Array zurï¿½ck)          #
+; #     - IsDialogButton1Selected()                 Prï¿½ft, ob Button1 des Dialogs ausgewï¿½hlt ist                                #
 ; #     - GetDialogStructPtr()                      Liest den Base Pointer zur Dialogstruktur aus (intern genutzt)              #
 ; #                                                                                                                             #
 ; #     - ShowDialog(style, caption, text,          Zeigt einen Dialog an (nur lokal)                                           #
@@ -254,8 +257,8 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; #     - GetTargetPed(dwPED)                       Zeigt die PED-ID, des Spielers, auf den man zielt.                          #
 ; #     - GetPedById(dwId)                          Zeigt die PED-Id zu der Id.                                                 #
 ; #     - GetIdByPed(dwId)                          Zeigt die Id der PED-Id.                                                    #
-; #     - GetStreamedInPlayersInfo()                Zeigt Informationen über die gestreamten Spieler.                           #
-; #     - CallFuncForAllStreamedInPlayers()         Führt bestimmte Funktionen, für die gestreamten Spieler aus.                #
+; #     - GetStreamedInPlayersInfo()                Zeigt Informationen ï¿½ber die gestreamten Spieler.                           #
+; #     - CallFuncForAllStreamedInPlayers()         Fï¿½hrt bestimmte Funktionen, fï¿½r die gestreamten Spieler aus.                #
 ; #     - GetDist(pos1,pos2)                        Rechnet den Abstand zwischen zwei Positionen aus.                           #
 ; #     - GetClosestPlayerPed()                     Zeigt die PED-ID, des Spielers, der am nahesten zu einem steht.             #
 ; #     - GetClosestPlayerId()                      Zeigt die Id, des Spielers, der am nahesten zu einem steht.                 #
@@ -309,7 +312,7 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
 ; #     - GetPlayerHealth()                         Ermittelt die HP des Spielers                                               #
-; #     - GetPlayerArmor()                          Ermittelt den Rüstungswert des Spielers                                     #
+; #     - GetPlayerArmor()                          Ermittelt den Rï¿½stungswert des Spielers                                     #
 ; #     - GetPlayerInteriorId()                     Ermittelt die Interior ID wo der Spieler ist                                #
 ; #     - GetPlayerSkinId()                         Ermittelt die Skin ID des Spielers                                          #
 ; #     - GetPlayerMoney()                          Ermittelt den Kontostand des Spielers (nur GTA Intern)                      #
@@ -347,19 +350,19 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
 ; #     - GetPlayerCoordinates()                    Ermittelt die aktuelle Position (Koordinaten)                               #
-; #     - GetPlayerPos(X, Y, Z)                     siehe oben drüber                                                           #
+; #     - GetPlayerPos(X, Y, Z)                     siehe oben drï¿½ber                                                           #
 ; #                                                                                                                             #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
 ; #     - InitZonesAndCities()                      Initialisiert eine Liste aller Standartgebiete                              #
-; #                                                 (Voraussetzung für die folgenden Funktionen dieser Kategorie)               #
+; #                                                 (Voraussetzung fï¿½r die folgenden Funktionen dieser Kategorie)               #
 ; #     - CalculateZone(X, Y, Z)                    Bestimmt die Zone (= Stadtteil) aus den geg. Koordinaten                    #
 ; #     - CalculateCity(X, Y, Z)                    Bestimmt die Stadt aus den geg. Koordinaten                                 #
 ; #     - GetCurrentZonecode()                      Ermittelt die aktulle Zone in Kurzform (Entfernt, da es nicht funktioniert) #
-; #     - AddZone(Name, X1, Y1, Z1, X2, Y2, Z2)     Fügt eine Zone zum Index hinzu                                              #
-; #     - AddCity(Name, X1, Y1, Z1, X2, Y2, Z2)     Fügt eine Stadt zum Index hinzu                                             #
-; #     - IsPlayerInRangeOfPoint(X, Y, Z, Radius)   Bestimmt ob der Spieler in der Nähe der Koordinaten ist                     #
-; #     - IsPlayerInRangeOfPoint2D(X, Y, Radius)    Bestimmt ob der Spieler in der Nähe der Koordinaten ist                     #
+; #     - AddZone(Name, X1, Y1, Z1, X2, Y2, Z2)     Fï¿½gt eine Zone zum Index hinzu                                              #
+; #     - AddCity(Name, X1, Y1, Z1, X2, Y2, Z2)     Fï¿½gt eine Stadt zum Index hinzu                                             #
+; #     - IsPlayerInRangeOfPoint(X, Y, Z, Radius)   Bestimmt ob der Spieler in der Nï¿½he der Koordinaten ist                     #
+; #     - IsPlayerInRangeOfPoint2D(X, Y, Radius)    Bestimmt ob der Spieler in der Nï¿½he der Koordinaten ist                     #
 ; #     - GetPlayerZone()                                                                                                       #
 ; #     - GetPlayerCity()                                                                                                       #
 ; #                                                                                                                             #
@@ -367,7 +370,7 @@ global iUpdateTick                          := 2500 ;time in ms, used for GetPla
 ; # Sonstiges:                                                                                                                  #
 ; # --------------------------------------------------------------------------------------------------------------------------- #
 ; #                                                                                                                             #
-; #     - AntiCrash()                               Hilft gegen das abstürzen bei Warningscodes                                 #
+; #     - AntiCrash()                               Hilft gegen das abstï¿½rzen bei Warningscodes                                 #
 ; #                                                                                                                             #
 ; ###############################################################################################################################
 ; # Speicherfunktionen (intern genutzt):                                                                                        #
@@ -1215,7 +1218,7 @@ GetVehicleSpeed() {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhöht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhï¿½ht bzw. verringert
  
 	return fVehicleSpeed
 }
@@ -2097,7 +2100,7 @@ GetTargetVehicleSpeedByPed(dwPED) {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhöht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhï¿½ht bzw. verringert
  
 	return fVehicleSpeed
 }
@@ -2113,7 +2116,7 @@ GetTargetVehicleSpeedById(dwId) {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhöht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhï¿½ht bzw. verringert
  
 	return fVehicleSpeed
 }
@@ -3087,6 +3090,41 @@ GetPlayerZone() {
 GetPlayerCity() {
 	aktPos := GetPlayerCoordinates()
 	return CalculateCity(aktPos[1], aktPos[2], aktPos[3])
+}
+
+GetPlayerColor(playerId) {
+    defaultColor = "FFFFFF"
+
+    if (!checkHandles())
+        return defaultColor
+
+    playerColor := readDWORD(hGTA, dwSAMP + SAMP_PLAYER_COLOR_OFFSET[sampVersion] + playerId * 4)
+    if (ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return defaultColor
+    }
+
+    hexCode := intToHex(idColor)
+    rgbhex := SubStr(intToHex(idColor), 3, 6)
+    if (StrLen(hexCode) = 6){
+        rgbhex := "0000" rgbhex
+        StringTrimRight, rgbhex, rgbhex, 2
+    }
+    else if(StrLen(hexCode) = 8){
+        rgbhex := "00" rgbhex
+        StringTrimRight, rgbhex, rgbhex, 2
+    }
+    StringUpper, playercolor, rgbhex
+    return playercolor
+}
+
+intToHex(int)
+{
+    CurrentFormat := A_FormatInteger
+    SetFormat, integer, hex
+    int += 0
+    SetFormat, integer, %CurrentFormat%
+    return int
 }
 
 InitZonesAndCities() {
