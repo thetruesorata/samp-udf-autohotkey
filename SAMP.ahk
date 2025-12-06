@@ -85,7 +85,6 @@ global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1AC, 0x1B8, 0x1AC, 0x1AC]
 global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x17C, 0x2A4, 0x17C, 0x120]
 global SAMP_REMOTEPLAYERDATA_POS            := [0x17C, 0x2A4, 0x2A, 0x42]
 
-global SIZE_SAMP_CHATMSG                    := 0xFC
 global SAMP_PLAYER_COLOR_OFFSET 			:= [0x151828, 0x216378, 0x216380, 0x18F6C0]
 
 ; void CGame::SetCheckpoint(CVector* pPos, CVector* pSize)
