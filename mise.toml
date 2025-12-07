@@ -1,0 +1,10 @@
+[tools]
+node = "25.2.1"
+"github:AutoHotkey/AutoHotkey" = "v1.1.37.02"
+
+[settings]
+experimental = true
+lockfile = true
+
+[tasks.runtest]
+run = "echo TestKeybinder.ahk will start. Check your tray icons && AutoHotKeyU32.exe ./TestKeybinder.ahk"
