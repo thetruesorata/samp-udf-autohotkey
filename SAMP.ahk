@@ -3618,8 +3618,8 @@ refreshSAMP() {
         return false
 
     versionByte := readMem(hGTA, dwSAMP + 0x1036, 1, "UChar")
-    ; TODO fix
-    sampVersion := 1 ; versionByte == 0xD8 ? 1 : (versionByte == 0xA8 ? 2 : (versionByte == 0x78 ? 3 : 0))
+    ; TODO swap orders
+    sampVersion := versionByte == 0x40 ? 1 : (versionByte == 0xD8 ? 2 : (versionByte == 0xA8 ? 3 : (versionByte == 0x78 ? 4 : 0)))
     if (!sampVersion)
     	return false
 
