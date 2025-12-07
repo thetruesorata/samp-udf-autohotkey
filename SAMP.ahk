@@ -63,45 +63,45 @@ global oweatherNames := ["EXTRASUNNY_LA", "SUNNY_LA", "EXTRASUNNY_SMOG_LA", "SUN
 ; ########################## SAMP addresses ##########################
 
 ; SAMPAPI_VAR CGame*& RefGame() 
-global ADDR_SAMP_INCHAT_PTR                 := [0x26EBAC, 0x21A10C, 0x21A114, 0x2ACA3C]
+global ADDR_SAMP_INCHAT_PTR                 := [0x21A10C, 0x21A114, 0x2ACA3C, 0x26EBAC]
 ; TODO verify offset
-global ADDR_SAMP_INCHAT_PTR_OFF             := [0x60, 0x55, 0x60, 0x60]
-global ADDR_SAMP_USERNAME                   := [0x26E2F7, 0x219A6F, 0x219A77, 0x2AC187]
+global ADDR_SAMP_INCHAT_PTR_OFF             := [0x55, 0x60, 0x60, 0x60]
+global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A77, 0x2AC187, 0x26E2F7]
 
 ; TODO verify offsets
-global ADDR_SAMP_SERVERNAME                 := [0x121, 0x121, 0x11D, 0x131]
-global ADDR_SAMP_SERVERIP                   := [0x20, 0x20, 0x1C, 0x30]
-global ADDR_SAMP_SERVERPORT                 := [0x225, 0x225, 0x221, 0x235]
-global ADDR_SAMP_VEHPOOL                    := [0x1C, 0x1C, 0xC, 0xC]
+global ADDR_SAMP_SERVERNAME                 := [0x121, 0x11D, 0x131, 0x121]
+global ADDR_SAMP_SERVERIP                   := [0x20, 0x1C, 0x30, 0x20]
+global ADDR_SAMP_SERVERPORT                 := [0x225, 0x221, 0x235, 0x225]
+global ADDR_SAMP_VEHPOOL                    := [0x1C, 0xC, 0xC, 0x1C]
 
 ; SAMPAPI_VAR CScoreboard*& RefScoreboard()
-global SAMP_SCOREBOARD_INFO_PTR 	        := [0x26EB4C, 0x21A0B4, 0x21A0BC, 0x2AC9DC]
+global SAMP_SCOREBOARD_INFO_PTR 	        := [0x21A0B4, 0x21A0BC, 0x2AC9DC, 0x26EB4C]
 
-global SAMP_REMOTEPLAYERDATA_OFFSET         := [0x10, 0x0, 0xC, 0x8]
-global SAMP_REMOTEPLAYERDATA_ACTOR          := [0x1DD, 0x0, 0x1C, 0x4]
-global SAMP_REMOTEPLAYERDATA_PED            := [0x0, 0x25C, 0x40, 0x40]
-global SAMP_REMOTEPLAYERDATA_HEALTH	        := [0x1B0, 0x1BC, 0x1BC, 0x1B0]
-global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1AC, 0x1B8, 0x1AC, 0x1AC]
-global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x17C, 0x2A4, 0x17C, 0x120]
-global SAMP_REMOTEPLAYERDATA_POS            := [0x17C, 0x2A4, 0x2A, 0x42]
+global SAMP_REMOTEPLAYERDATA_OFFSET         := [0x0, 0xC, 0x8, 0x10]
+global SAMP_REMOTEPLAYERDATA_ACTOR          := [0x0, 0x1C, 0x4, 0x1DD]
+global SAMP_REMOTEPLAYERDATA_PED            := [0x25C, 0x40, 0x40, 0x0]
+global SAMP_REMOTEPLAYERDATA_HEALTH	        := [0x1BC, 0x1BC, 0x1B0, 0x1B0]
+global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1B8, 0x1AC, 0x1AC, 0x1AC]
+global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x2A4, 0x17C, 0x120, 0x17C]
+global SAMP_REMOTEPLAYERDATA_POS            := [0x2A4, 0x2A, 0x42, 0x17C]
 
-global SAMP_PLAYER_COLOR_OFFSET 			:= [0x151828, 0x216378, 0x216380, 0x18F6C0]
+global SAMP_PLAYER_COLOR_OFFSET 			:= [0x216378, 0x216380, 0x18F6C0, 0x151828]
 
 ; void CGame::SetCheckpoint(CVector* pPos, CVector* pSize)
-global FUNC_SAMP_SETCHECKPOINT              := [0xA1DE0, 0x9D340, 0x9D3F0, 0xA1C00]
+global FUNC_SAMP_SETCHECKPOINT              := [0x9D340, 0x9D3F0, 0xA1C00, 0xA1DE0]
 ; TODO verify offset
-global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x24, 0x4D, 0x4D]
+global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x4D, 0x4D, 0x24]
 
-global FUNC_SAMP_SENDCMD                    := [0x69900, 0x65C60, 0x65D30, 0x69340] 
-global FUNC_SAMP_SENDSAY                    := [0x5A10, 0x57F0, 0x57E0, 0x5860]
-global FUNC_SAMP_ADDTOCHATWND               := [0x68070, 0x64520, 0x645F0, 0x67B60]
+global FUNC_SAMP_SENDCMD                    := [0x65C60, 0x65D30, 0x69340, 0x69900] 
+global FUNC_SAMP_SENDSAY                    := [0x57F0, 0x57E0, 0x5860, 0x5A10]
+global FUNC_SAMP_ADDTOCHATWND               := [0x64520, 0x645F0, 0x67B60, 0x68070]
 ; SAMPAPI_VAR CChat*& RefChat() 
-global ADDR_SAMP_CHATMSG_PTR                := [0x26EB80, 0x21A0E4, 0x21A0EC, 0x2ACA10]
-global FUNC_SAMP_SHOWGAMETEXT               := [0xA0CE0, 0x9C2C0, 0x9C370, 0xA0B20]
+global ADDR_SAMP_CHATMSG_PTR                := [0x21A0E4, 0x21A0EC, 0x2ACA10, 0x26EB80]
+global FUNC_SAMP_SHOWGAMETEXT               := [0x9C2C0, 0x9C370, 0xA0B20, 0xA0CE0]
 ; BOOL CAudioStream::Play(const char* szUrl, CVector position, float fRadius, bool bIs3d)
-global FUNC_SAMP_PLAYAUDIOSTR               := [0x66960, 0x62DA0, 0x62E70, 0x663E0]
+global FUNC_SAMP_PLAYAUDIOSTR               := [0x62DA0, 0x62E70, 0x663E0, 0x66960]
 ; BOOL CAudioStream::Stop(bool bWait)
-global FUNC_SAMP_STOPAUDIOSTR               := [0x66560, 0x629A0, 0x62A70, 0x65FE0]
+global FUNC_SAMP_STOPAUDIOSTR               := [0x629A0, 0x62A70, 0x65FE0, 0x66560]
 
 ; ########################## Dialog styles ##########################
 global DIALOG_STYLE_MSGBOX                  := 0
@@ -114,7 +114,7 @@ global DIALOG_STYLE_TABLIST_HEADERS         := 5
 
 ; ######################### Dialog structure #########################
 ; SAMPAPI_VAR CDialog*& RefDialog()
-global SAMP_DIALOG_STRUCT_PTR               := [0x26EB50, 0x21A0B8, 0x21A0C0, 0x2AC9E0]
+global SAMP_DIALOG_STRUCT_PTR               := [0x21A0B8, 0x21A0C0, 0x2AC9E0, 0x26EB50]
 global SAMP_DIALOG_PTR1_OFFSET              := 0x1C
 global SAMP_DIALOG_LINES_OFFSET             := 0x44C
 global SAMP_DIALOG_INDEX_OFFSET             := 0x443
@@ -128,37 +128,37 @@ global SAMP_DIALOG_ID_OFFSET                := 0x30
 global SAMP_DIALOG_TEXT_PTR_OFFSET          := 0x34
 global SAMP_DIALOG_CAPTION_OFFSET           := 0x40
 ; void CDialog::Show(int nId, int nType, const char* szCaption, const char* szText, const char* szLeftButton, const char* szRightButton, BOOL bServerside)
-global FUNC_SAMP_SHOWDIALOG                 := [0x6FFB0, 0x6B9C0, 0x6BA70, 0x6FA50]
+global FUNC_SAMP_SHOWDIALOG                 := [0x6B9C0, 0x6BA70, 0x6FA50, 0x6FFB0]
 ; void CDialog::Close(char nProcessButton)
-global FUNC_SAMP_CLOSEDIALOG                := [0x70630, 0x6C040, 0x6B2C0, 0x6F2A0]
+global FUNC_SAMP_CLOSEDIALOG                := [0x6C040, 0x6B2C0, 0x6F2A0, 0x70630]
 
 
 ; ######################### Scoreboard #########################
 ; void CNetGame::UpdatePlayers()
-global FUNC_UPDATESCOREBOARD                := [0x8F10, 0x8A10, 0x8A20, 0x8C00]
+global FUNC_UPDATESCOREBOARD                := [0x8A10, 0x8A20, 0x8C00, 0x8F10]
 ; SAMPAPI_VAR CNetGame*& RefNetGame()
-global SAMP_INFO_OFFSET                     := [0x26EB94, 0x21A0F8, 0x21A100, 0x2ACA24]
+global SAMP_INFO_OFFSET                     := [0x21A0F8, 0x21A100, 0x2ACA24, 0x26EB94]
 ; TODO find out
-global ADDR_SAMP_CRASHREPORT                := [0, 0x5CF2C, 0x5D00C, 0x604CC]
-global SAMP_PPOOLS_OFFSET                   := [0x3DE, 0x3CD, 0x3C5, 0x3DE]
-global SAMP_PPOOL_PLAYER_OFFSET             := [0x4, 0x18, 0x8, 0x8]
+global ADDR_SAMP_CRASHREPORT                := [0x5CF2C, 0x5D00C, 0x604CC, 0]
+global SAMP_PPOOLS_OFFSET                   := [0x3CD, 0x3C5, 0x3DE, 0x3DE]
+global SAMP_PPOOL_PLAYER_OFFSET             := [0x18, 0x8, 0x8, 0x4]
 
 ; TODO verify all offsets
-global SAMP_SLOCALPLAYERID_OFFSET           := [0x4, 0x4, 0x0, 0x0]
-global SAMP_ISTRLEN_LOCALPLAYERNAME_OFFSET  := [0x1A, 0x1A, 0x16, 0x16]
-global SAMP_SZLOCALPLAYERNAME_OFFSET        := [0xA, 0xA, 0x6, 0x6]
-global SAMP_PSZLOCALPLAYERNAME_OFFSET       := [0xA, 0xA, 0x6, 0x6]
-global SAMP_ILOCALPLAYERPING_OFFSET         := [0x22, 0x26, 0x2F36, 0x2F36]
-global SAMP_ILOCALPLAYERSCORE_OFFSET        := [0x0, 0x2A, 0x2F3A, 0x2F3A]
+global SAMP_SLOCALPLAYERID_OFFSET           := [0x4, 0x0, 0x0, 0x4]
+global SAMP_ISTRLEN_LOCALPLAYERNAME_OFFSET  := [0x1A, 0x16, 0x16, 0x1A]
+global SAMP_SZLOCALPLAYERNAME_OFFSET        := [0xA, 0x6, 0x6, 0xA]
+global SAMP_PSZLOCALPLAYERNAME_OFFSET       := [0xA, 0x6, 0x6, 0xA]
+global SAMP_ILOCALPLAYERPING_OFFSET         := [0x26, 0x2F36, 0x2F36, 0x22]
+global SAMP_ILOCALPLAYERSCORE_OFFSET        := [0x2A, 0x2F3A, 0x2F3A, 0x0]
 
-global SAMP_PREMOTEPLAYER_OFFSET            := [0x1F8A, 0x2E, 0x26, 0x26]
+global SAMP_PREMOTEPLAYER_OFFSET            := [0x2E, 0x26, 0x26, 0x1F8A]
 ; Capacity, not size!
-global SAMP_ISTRLENNAME___OFFSET            := [0x28, 0x1C, 0x24, 0x24]
-global SAMP_SZPLAYERNAME_OFFSET             := [0x18, 0xC, 0x14, 0x14]
-global SAMP_PSZPLAYERNAME_OFFSET            := [0x18, 0xC, 0x14, 0x14]
-global SAMP_IPING_OFFSET                    := [0xC, 0x28, 0x4, 0xC]
-global SAMP_ISCORE_OFFSET                   := [0x4, 0x24, 0x0, 0x0]
-global SAMP_ISNPC_OFFSET                    := [0x8, 0x4, 0x8, 0x4]
+global SAMP_ISTRLENNAME___OFFSET            := [0x1C, 0x24, 0x24, 0x28]
+global SAMP_SZPLAYERNAME_OFFSET             := [0xC, 0x14, 0x14, 0x18]
+global SAMP_PSZPLAYERNAME_OFFSET            := [0xC, 0x14, 0x14, 0x18]
+global SAMP_IPING_OFFSET                    := [0x28, 0x4, 0xC, 0xC]
+global SAMP_ISCORE_OFFSET                   := [0x24, 0x0, 0x0, 0x4]
+global SAMP_ISNPC_OFFSET                    := [0x4, 0x8, 0x4, 0x8]
 
 global SAMP_PLAYER_MAX                      := 1004
 
@@ -3618,8 +3618,7 @@ refreshSAMP() {
         return false
 
     versionByte := readMem(hGTA, dwSAMP + 0x1036, 1, "UChar")
-    ; TODO swap orders
-    sampVersion := versionByte == 0x40 ? 1 : (versionByte == 0xD8 ? 2 : (versionByte == 0xA8 ? 3 : (versionByte == 0x78 ? 4 : 0)))
+    sampVersion := versionByte == 0xD8 ? 1 : (versionByte == 0xA8 ? 2 : (versionByte == 0x78 ? 3 : (versionByte == 0x40 ? 4 : 0)))
     if (!sampVersion)
     	return false
 
