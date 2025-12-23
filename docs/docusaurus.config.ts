@@ -47,7 +47,9 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            `https://github.com/${organizationName}/${projectName}/tree/main/packages/create-docusaurus/templates/shared/`,
+            `https://github.com/${organizationName}/${projectName}/docs/`,
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
           admonitions: {
             keywords: ['experimental'],
             extendDefaults: true,
