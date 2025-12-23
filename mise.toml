@@ -8,3 +8,14 @@ lockfile = true
 
 [tasks.runtest]
 run = "echo TestKeybinder.ahk will start. Check your tray icons && AutoHotKeyU32.exe ./TestKeybinder.ahk"
+
+[tasks."docs:run"]
+dir = "{{ config_root }}/docs"
+run = "npm run start"
+
+[tasks."docs:build"]
+dir = "{{ config_root }}/docs"
+run = "npm run build"
+
+[tasks."docs:gen"]
+run = "npm run gen-docs"

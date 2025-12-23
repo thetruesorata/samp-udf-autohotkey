@@ -1,5 +1,5 @@
-; #### SAMP UDF R16 ####
-; SAMP Version: 0.3.7-R2
+; #### SAMP UDF R18 ####
+; SAMP Version: 0.3.7, 0.3.7-R2, 0.3.7-R5, 0.3.DL
 ; Written by Chuck_Floyd 
 ; https://github.com/FrozenBrain
 ; Modified by Suchty112
@@ -11,6 +11,10 @@
 ; Modified by: RawDev and ELon
 ; Refactoring by: Peek
 ; https://github.com/pkfln
+; Multifunctional by: Coderunner
+; https://samp-udf.net/index.php?user/4-coderunner/
+; Modified by: thetruesorata
+; https://github.com/thetruesorata
 ; Do not remove these lines.
 ; ####################
 
@@ -64,11 +68,9 @@ global oweatherNames := ["EXTRASUNNY_LA", "SUNNY_LA", "EXTRASUNNY_SMOG_LA", "SUN
 
 ; SAMPAPI_VAR CGame*& RefGame() 
 global ADDR_SAMP_INCHAT_PTR                 := [0x21A10C, 0x21A114, 0x2ACA3C, 0x26EBAC]
-; TODO verify offset
 global ADDR_SAMP_INCHAT_PTR_OFF             := [0x55, 0x60, 0x60, 0x60]
 global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A77, 0x2AC187, 0x26E2F7]
 
-; TODO verify offsets
 global ADDR_SAMP_SERVERNAME                 := [0x121, 0x11D, 0x131, 0x121]
 global ADDR_SAMP_SERVERIP                   := [0x20, 0x1C, 0x30, 0x20]
 global ADDR_SAMP_SERVERPORT                 := [0x225, 0x221, 0x235, 0x225]
@@ -84,13 +86,12 @@ global SAMP_REMOTEPLAYERDATA_HEALTH	        := [0x1BC, 0x1BC, 0x1B0, 0x1B0]
 global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1B8, 0x1AC, 0x1AC, 0x1AC]
 global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x2A4, 0x17C, 0x120, 0x17C]
 global SAMP_REMOTEPLAYERDATA_POS            := [0x2A4, 0x2A, 0x42, 0x17C]
-
-global SAMP_PLAYER_COLOR_OFFSET 			:= [0x216378, 0x216380, 0x18F6C0, 0x151828]
-
 ; void CGame::SetCheckpoint(CVector* pPos, CVector* pSize)
 global FUNC_SAMP_SETCHECKPOINT              := [0x9D340, 0x9D3F0, 0xA1C00, 0xA1DE0]
 ; TODO verify offset
 global SAMP_CHECKPOINT_ACTIVE               := [0x24, 0x4D, 0x4D, 0x24]
+
+global SAMP_PLAYER_COLOR_OFFSET 			:= [0x216378, 0x216380, 0x18F6C0, 0x151828]
 
 global FUNC_SAMP_SENDCMD                    := [0x65C60, 0x65D30, 0x69340, 0x69900] 
 global FUNC_SAMP_SENDSAY                    := [0x57F0, 0x57E0, 0x5860, 0x5A10]
@@ -143,7 +144,6 @@ global ADDR_SAMP_CRASHREPORT                := [0x5CF2C, 0x5D00C, 0x604CC, 0]
 global SAMP_PPOOLS_OFFSET                   := [0x3CD, 0x3C5, 0x3DE, 0x3DE]
 global SAMP_PPOOL_PLAYER_OFFSET             := [0x18, 0x8, 0x8, 0x4]
 
-; TODO verify all offsets
 global SAMP_SLOCALPLAYERID_OFFSET           := [0x4, 0x0, 0x0, 0x4]
 global SAMP_ISTRLEN_LOCALPLAYERNAME_OFFSET  := [0x1A, 0x16, 0x16, 0x1A]
 global SAMP_SZLOCALPLAYERNAME_OFFSET        := [0xA, 0x6, 0x6, 0xA]
@@ -192,216 +192,12 @@ global oScoreboardData                      := ""
 global iRefreshHandles                      := 0
 global iUpdateTick                          := 2500 ;time in ms, used for GetPlayerNameById etc. to refresh data
 
-
-; ###############################################################################################################################
-; # SAMP-Funktionen:                                                                                                            #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - IsSAMPAvailable()                         Prùft, ob man in den Chat schreiben kann & ob GTA geladen ist               #
-; #     - IsInChat()                                Prùft, ob der Spieler gerade chattet oder in einem Dialog ist               #
-; #     - GetPlayerName()                           Liest den Namen des Spielers aus                                            #
-; #     - GetPlayerId()                             Liest die ID des Spielers aus                                               #
-; #     - SendChat(wText)                           Sendet eine Nachricht oder einen Befehl direkt an den Server                #
-; #     - AddChatMessage(wText)                     Fùgt eine Zeile in den Chat ein (nur fùr den Spieler sichtbar)              #
-; #     - ShowGameText(wText, dwTime, dwTextstyle)  Zeigt einen Text inmitten des Bildschirmes an                               #
-; #     - PlayAudioStream(wUrl)                     Spielt einen "Audio Stream" ab                                              #
-; #     - StopAudioStream()                         Stoppt den aktuellen Audio Stream                                           #
-; #     - GetChatLine(Line, ByRef Output)           Liest die eingestellte Zeile aus,                                           #
-; #                                                 Optionale Parameter (timestamp=0, color=0)                                  #
-; #     - BlockChatInput()                          Eine Funktion, um Messages zum Server zu blockieren                         #
-; #     - UnBlockChatInput()                        Eine Funktion, um Messages zum Server zu entblockieren                      #
-; #                                                                                                                             #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetServerName()                           Ermittelt den Server-Namen (HostName)                                       #
-; #     - GetServerIp()                             Ermittelt die IP des Servers                                                #
-; #     - GetServerPort()                           Ermittelt den Port des Servers                                              #
-; #     - CountOnlinePlayers()                      Ermittelt wie viele Spieler auf dem Server Online sind.                     #
-; #                                                                                                                             #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetWeatherId()                            Gibt die aktuelle Wetter ID zurùck                                          #
-; #     - GetWeatherName()                          Gibt den aktuellen Wetternamen zurùck                                       #
-; #                                                                                                                             #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - PatchRadio()                              (interner stuff)                                                            #
-; #     - UnPatchRadio()                            (interner stuff)                                                            #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # SAMP Dialog Funktionen (v0.3.7):                                                                                            #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - IsDialogOpen()                            Prùft, ob gerade ein Dialog angezeigt wird (gibt true oder false zurùck)    #
-; #     - GetDialogStyle()                          Liest den Typ des (zuletzt) angezeigten Dialogs aus (0-5)                   #
-; #     - GetDialogId()                             Liest die ID des (zuletzt) angezeigten Dialogs aus (auch vom Server)        #
-; #     - SetDialogId(id)                           Setzt die ID des (zuletzt) angezeigten Dialogs                              #
-; #     - GetDialogIndex()                          Liest die (zuletzt) ausgewùhlte Zeile des Dialogs aus                       #
-; #     - GetDialogCaption()                        Liest die ùberschrift des (zuletzt) angezeigten Dialogs aus                 #
-; #     - GetDialogText()                           Liest den Text des (zuletzt) angezeigten Dialogs aus (auch bei Listen)      #
-; #     - GetDialogLineCount()                      Liest die Anzahl der Zeilen/Items des (zuletzt) angezeigten Dialogs aus     #
-; #     - GetDialogLine(index)                      Liest die Zeile an der Stelle [index] mittels GetDialogText aus             #
-; #     - GetDialogLines__()                          Liest die Zeilen mittels GetDialogText aus (gibt ein Array zurùck)          #
-; #     - IsDialogButton1Selected()                 Prùft, ob Button1 des Dialogs ausgewùhlt ist                                #
-; #     - GetDialogStructPtr()                      Liest den Base Pointer zur Dialogstruktur aus (intern genutzt)              #
-; #                                                                                                                             #
-; #     - ShowDialog(style, caption, text,          Zeigt einen Dialog an (nur lokal)                                           #
-; #                  button1, button2, id)                                                                                      #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Extra-Player-Funktionen:                                                                                                    #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetTargetPed(dwPED)                       Zeigt die PED-ID, des Spielers, auf den man zielt.                          #
-; #     - GetPedById(dwId)                          Zeigt die PED-Id zu der Id.                                                 #
-; #     - GetIdByPed(dwId)                          Zeigt die Id der PED-Id.                                                    #
-; #     - GetStreamedInPlayersInfo()                Zeigt Informationen ùber die gestreamten Spieler.                           #
-; #     - CallFuncForAllStreamedInPlayers()         Fùhrt bestimmte Funktionen, fùr die gestreamten Spieler aus.                #
-; #     - GetDist(pos1,pos2)                        Rechnet den Abstand zwischen zwei Positionen aus.                           #
-; #     - GetClosestPlayerPed()                     Zeigt die PED-ID, des Spielers, der am nahesten zu einem steht.             #
-; #     - GetClosestPlayerId()                      Zeigt die Id, des Spielers, der am nahesten zu einem steht.                 #
-; #     - GetPedCoordinates(dwPED)                  Zeigt die Koordinaten, der PED-ID.                                          #
-; #     - GetTargetPosById(dwId)                    Zeigt die Position, zu der angegebenen Id.                                  #
-; #     - GetTargetPlayerSkinIdByPed(dwPED)         Zeigt den Skin, zu der angegebenen PED-ID.                                  #
-; #     - GetTargetPlayerSkinIdById(dwId)           Zeigt den Skin, zu der angegebenen ID.                                      #
-; #     - CalcScreenCoords(fX, fY, fZ)              WorldToScreen Funktion                                                      #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Extra-Player-Fahrzeug-Funktionen:                                                                                           #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetVehiclePointerByPed(dwPED)             Zeigt die PED-ID des Autos.                                                 #
-; #     - GetVehiclePointerById(dwId)               Zeigt die PED-ID des Autos.                                                 #
-; #     - IsTargetInAnyVehicleByPed(dwPED)          Zeigt ob der Spieler in einem Auto ist.                                     #
-; #     - IsTargetInAnyVehicleById(dwId)            Zeigt ob der Spieler in einem Auto ist.                                     #
-; #     - GetTargetVehicleHealthByPed(dwPED)        Zeigt ob der Spieler in einem Auto ist.                                     #
-; #     - GetTargetVehicleHealthById(dwId)          Zeigt ob der Spieler in einem Auto ist.                                     #
-; #     - GetTargetVehicleTypeByPed(dwPED)          Ermittelt den FahrzeugTyp (Auto, LKW etc.)                                  #
-; #     - GetTargetVehicleTypeById(dwId)            Ermittelt den FahrzeugTyp (Auto, LKW etc.)                                  #
-; #     - GetTargetVehicleModelIdByPed(dwPED)       Ermittelt die FahrzeuGmodell ID                                             #
-; #     - GetTargetVehicleModelIdById(dwId)         Ermittelt die Fahrzeugmodell ID                                             #
-; #     - GetTargetVehicleModelNameByPed(dwPED)     Ermittelt den Fahrzeugmodell Namen                                          #
-; #     - GetTargetVehicleModelNameById(dwId)       Ermittelt den Fahrzeugmodell Namen                                          #
-; #     - GetTargetVehicleLightStateByPed(dwPED)    Ermittelt den Lichtzustand des Autos                                        #
-; #     - GetTargetVehicleLightStateById(dwId)      Ermittelt den Lichtzustand des Autos                                        #
-; #     - GetTargetVehicleLockStateByPed(dwPED)     Ermittelt ob das Auto auf oder zu ist                                       #
-; #     - GetTargetVehicleLockStateById(dwId)       Ermittelt ob das Auto auf oder zu ist                                       #
-; #     - GetTargetVehicleColor1ByPed(dwPED)        Ermittelt die 1. Color-ID des Autos                                         #
-; #     - GetTargetVehicleColor1ById(dwId)          Ermittelt die 1. Color-ID des Autos                                         #
-; #     - GetTargetVehicleColor2ByPed(dwPED)        Ermittelt die 2. Color-ID des Autos                                         #
-; #     - GetTargetVehicleColor2ById(dwId)          Ermittelt die 2. Color-ID des Autos                                         #
-; #     - GetTargetVehicleSpeedByPed(dwPED)         Ermittelt die Geschwindigkeit des Autos                                     #
-; #     - GetTargetVehicleSpeedById(dwId)           Ermittelt die Geschwindigkeit des Autos                                     #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Scoreboard-Funktionen:                                                                                                      #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetPlayerScoreById(dwId)                  Zeigt den Score zu der Id                                                   #
-; #     - GetPlayerPingById(dwId)                   Zeigt den Ping zu der Id                                                    #
-; #     - GetPlayerNameById(dwId)                   Zeigt den Namen zu der Id                                                   #
-; #     - GetPlayerIdByName(wName)                  Zeigt die Id zu dem Namen                                                   #
-; #     - UpdateScoreboardDataEx()                  Aktualisiert Scoreboard Inhalte (wird implizit aufgerufen)                  #
-; #     - UpdateOScoreboardData()                   Aktualisiert Scoreboard Inhalte (wird implizit aufgerufen)                  #
-; #     - IsNPCById(dwId)                           Zeigt an ob die ID ein NPC                                                  #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Spielerfunktionen:                                                                                                          #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetPlayerHealth()                         Ermittelt die HP des Spielers                                               #
-; #     - GetPlayerArmor()                          Ermittelt den Rùstungswert des Spielers                                     #
-; #     - GetPlayerInteriorId()                     Ermittelt die Interior ID wo der Spieler ist                                #
-; #     - GetPlayerSkinId()                         Ermittelt die Skin ID des Spielers                                          #
-; #     - GetPlayerMoney()                          Ermittelt den Kontostand des Spielers (nur GTA Intern)                      #
-; #     - GetPlayerWanteds()                        Ermittelt die Wantedanzahl des Spielers (nur bis 6 Wanteds)                 #
-; #     - GetPlayerWeaponId()                       Ermittelt die Waffen ID des Spielers                                        #
-; #     - GetPlayerWeaponName()                     Ermittelt den Namen, der Waffe des Spielers                                 #
-; #     - GetPlayerState()                          Ermittelt den "Status" des Spielers (Zu Fuss, Fahrer, Tot)                  #
-; #     - GetPlayerMapPosX()                        Ermittelt die X-Position auf der Map im Menu                                #
-; #     - GetPlayerMapPosY()                        Ermittelt die Y-Position auf der Map im Menu                                #
-; #     - GetPlayerMapZoom()                        Ermittelt den Zoom auf der Map im Menu                                      #
-; #     - IsPlayerFreezed()                         Ermittelt ob der Spieler freezed ist                                        #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Fahrzeugfunktionen:                                                                                                         #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - IsPlayerInAnyVehicle()                    Ermittelt, ob sich der Spieler in einem Fahrzeug befindet                   #
-; #     - GetVehicleHealth()                        Ermittelt die HP des Fahrzeugs, in dem der Spieler sitzt                    #
-; #     - IsPlayerDriver()                          Ermittelt ob der Spieler Fahrer des Autos ist                               #
-; #     - GetVehicleType()                          Ermittelt den FahrzeugTyp (Auto, LKW etc.)                                  #
-; #     - GetVehicleModelId()                       Ermittelt die Fahrzeugmodell ID                                             #
-; #     - GetVehicleModelName()                     Ermittelt den Fahrzeugmodell Namen                                          #
-; #     - GetVehicleLightState()                    Ermittelt den Lichtzustand des Autos                                        #
-; #     - GetVehicleEngineState()                   Ermittelt den Motorzustand des Autos                                        #
-; #     - GetVehicleLockState()                     Ermittelt ob das Auto auf oder zu ist                                       #
-; #     - GetVehicleColor1()                        Ermittelt die 1. Farbe ID des Autos                                         #
-; #     - GetVehicleColor2()                        Ermittelt die 2. Farbe ID des Autos                                         #
-; #     - GetVehicleSpeed()                         Ermittelt die Geschwindigkeit des Autos                                     #
-; #     - GetPlayerRadiostationId()                 Ermittelt die Radiostation-ID des Autos                                     #
-; #     - GetPlayerRadiostationName()               Ermittelt den Radiostation-Namen des Autos                                  #
-; #     - GetVehicleNumberPlate()                   Ermittelt das Kennzeichen des Autos                                         #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Standpunktbestimmung:                                                                                                       #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - GetPlayerCoordinates()                    Ermittelt die aktuelle Position (Koordinaten)                               #
-; #     - GetPlayerPos(X, Y, Z)                     siehe oben drùber                                                           #
-; #                                                                                                                             #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - InitZonesAndCities()                      Initialisiert eine Liste aller Standartgebiete                              #
-; #                                                 (Voraussetzung fùr die folgenden Funktionen dieser Kategorie)               #
-; #     - CalculateZone(X, Y, Z)                    Bestimmt die Zone (= Stadtteil) aus den geg. Koordinaten                    #
-; #     - CalculateCity(X, Y, Z)                    Bestimmt die Stadt aus den geg. Koordinaten                                 #
-; #     - GetCurrentZonecode()                      Ermittelt die aktulle Zone in Kurzform (Entfernt, da es nicht funktioniert) #
-; #     - AddZone(Name, X1, Y1, Z1, X2, Y2, Z2)     Fùgt eine Zone zum Index hinzu                                              #
-; #     - AddCity(Name, X1, Y1, Z1, X2, Y2, Z2)     Fùgt eine Stadt zum Index hinzu                                             #
-; #     - IsPlayerInRangeOfPoint(X, Y, Z, Radius)   Bestimmt ob der Spieler in der Nùhe der Koordinaten ist                     #
-; #     - IsPlayerInRangeOfPoint2D(X, Y, Radius)    Bestimmt ob der Spieler in der Nùhe der Koordinaten ist                     #
-; #     - GetPlayerZone()                                                                                                       #
-; #     - GetPlayerCity()                                                                                                       #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Sonstiges:                                                                                                                  #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - AntiCrash()                               Hilft gegen das abstùrzen bei Warningscodes                                 #
-; #                                                                                                                             #
-; ###############################################################################################################################
-; # Speicherfunktionen (intern genutzt):                                                                                        #
-; # --------------------------------------------------------------------------------------------------------------------------- #
-; #                                                                                                                             #
-; #     - checkHandles()                                                                                                        #
-; #     - refreshGTA()                                                                                                          #
-; #     - refreshSAMP()                                                                                                         #
-; #     - refreshMemory()                                                                                                       #
-; #     - getPID(szWindow)                                                                                                      #
-; #     - openProcess(dwPID, dwRights)                                                                                          #
-; #     - closeProcess(hProcess)                                                                                                #
-; #     - getModuleBaseAddress(sModule, dwPID)                                                                                  #
-; #     - readString(hProcess, dwAddress, dwLen)                                                                                #
-; #     - readFloat(hProcess, dwAddress)                                                                                        #
-; #     - readDWORD(hProcess, dwAddress)                                                                                        #
-; #     - readMem(hProcess, dwAddress, dwLen=4, type="UInt")                                                                    #
-; #     - writeString(hProcess, dwAddress, wString)                                                                             #
-; #     - writeRaw(hProcess, dwAddress, data, dwLen)                                                                            #
-; #     - Memory_ReadByte(process_handle, address)                                                                              #
-; #     - callWithParams(hProcess, dwFunc, aParams, bCleanupStack = true)                                                       #
-; #     - virtualAllocEx(hProcess, dwSize, flAllocationType, flProtect)                                                         #
-; #     - virtualFreeEx(hProcess, lpAddress, dwSize, dwFreeType)                                                                #
-; #     - createRemoteThread(hProcess, lpThreadAttributes, dwStackSize, lpStartAddress, lpParameter, dwCreationFlags,           #
-; #                          lpThreadId)                                                                                        #
-; #     - __ansiToUnicode(sString, nLen = 0)                                                                                    #
-; #     - __unicodeToAnsi(wString, nLen = 0)                                                                                    #
-; #                                                                                                                             #
-; ###############################################################################################################################
-
-
-; ##### SAMP-Funktionen #####
-
+/**
+ * Check if SA:MP is loaded and chat is available
+ *
+ * @category SAMP
+ * @returns `true` if SA:MP is available, `false` otherwise
+ */ 
 IsSAMPAvailable() {
     if(!checkHandles())
         return false
@@ -418,6 +214,12 @@ IsSAMPAvailable() {
 	}
 }
 
+/**
+ * Check if the player has their chat open.
+ *
+ * @category SAMP
+ * @returns `true` if chat is open, `false` otherwise
+ */
 IsInChat() {
     if(!checkHandles())
         return -1
@@ -443,6 +245,12 @@ IsInChat() {
     }
 }
 
+/**
+ * Retrieves the player's name. This is directly read from memory.
+ *
+ * @category SAMP
+ * @returns The player's name as a string, or an empty string on failure
+ */
 GetPlayerName() {
     if(!checkHandles())
         return ""
@@ -458,11 +266,26 @@ GetPlayerName() {
     return sUsername
 }
 
+/**
+ * Retrieves the player's ID. First, the player's name is fetched 
+ * using `GetPlayerName()`, and then the ID is obtained using `GetPlayerIdByName()`.
+ * In the end, the ID is grabbed from the scoreboard.
+ *
+ * @category SAMP
+ * @returns The player's ID as an integer, or -1 on failure
+ */
 GetPlayerId() {
     s := GetPlayerName()
     return GetPlayerIdByName(s)
 }
 
+/**
+ * Send a chat message or command to the server
+ *
+ * @category SAMP
+ * @param wText The text to send (prefix with "/" for commands)
+ * @returns `true` if successful, `false` otherwise
+ */
 SendChat(wText) {
      wText := "" wText
     
@@ -482,6 +305,13 @@ SendChat(wText) {
     return true
 }
 
+/**
+ * Add a message to chat window (only visible for the local player)
+ *
+ * @category SAMP
+ * @param wText The text to add
+ * @returns `true` if successful, `false` otherwise 
+ */ 
 AddChatMessage(wText) {
     wText := "" wText
 
@@ -501,6 +331,18 @@ AddChatMessage(wText) {
     return true
 }
 
+/**
+ * Show a game text in the middle of the screen.
+ *
+ * For more information about text colors, styles and formatting, please refer
+ * to [GameText Styles | open.mp](https://open.mp/de/docs/scripting/resources/gametextstyles)
+ *
+ * @category SAMP
+ * @param wText The text to show
+ * @param dwTime Time in milliseconds the text should be displayed
+ * @param dwTextstyle Text style (0-5)
+ * @returns `true` if successful, `false` otherwise
+ */
 ShowGameText(wText, dwTime, dwTextstyle) {
     wText := "" wText
     dwTime += 0
@@ -519,6 +361,17 @@ ShowGameText(wText, dwTime, dwTextstyle) {
     return true
 }
 
+/**
+ * Play an audio stream. Please note that
+ * <ul>
+ *   <li>your radio will be switched and locked to "User Track Player"</li>
+ *   <li>audio can only be heard if your radio volume is not turned all the way down.</li>
+ * </ul>
+ *
+ * @category SAMP
+ * @param wUrl The URL of the audio stream to play
+ * @returns `true` if successful, `false` otherwise
+ */
 PlayAudioStream(wUrl) {
     wUrl := "" wUrl
     
@@ -537,6 +390,23 @@ PlayAudioStream(wUrl) {
     return true
 }
 
+/**
+ * Stops an audio stream.
+ * <p>
+ * Please note that even after stopping an audio stream, the in-game radio may still be locked
+ * to "User Track Player". You can try to fix this by starting and stopping an audio stream consecutively.
+ * However, this may not work very consistently and may need multiple iterations
+ * in order to get the radio working again. If it still does not work, you can
+ * <ul>
+ *   <li>try lowering radio volume to 0, then resume your game and try to switch. Rinse and repeat
+ *   in combination with stopping and starting audio streams.</li>
+ *   <li>restart your game in doubt.</li>
+ * </ul>
+ * </p>
+ *
+ * @category SAMP
+ * @returns `true` if successful, `false` otherwise
+ */
 StopAudioStream() {
     if(!checkHandles())
         return false
@@ -553,6 +423,14 @@ StopAudioStream() {
     return true
 }
 
+/**
+ * TODO verify
+ * Patch the radio functions to disable audio streams
+ * This makes methods/functions to play and stop audio streams no-ops.
+ *
+ * @category SAMP
+ * @returns `true` if successful, `false` otherwise
+ */
 PatchRadio() {
     if(!checkHandles())
         return false
@@ -570,6 +448,13 @@ PatchRadio() {
     return true
 }
 
+/**
+ * TODO verify
+ * Patch the radio functions to revert their original behavior.
+ *
+ * @category SAMP
+ * @returns `true` if successful, `false` otherwise
+ */
 UnPatchRadio() {
     if(!checkHandles())
         return false
@@ -590,6 +475,13 @@ UnPatchRadio() {
     return true
 }
 
+/**
+ * Block chat input from the player. The chat can still be opened, but
+ * no messages or commands can be sent.
+ *
+ * @category SAMP
+ * @returns `true` if successful, `false` otherwise
+ */
 BlockChatInput() {
     if(!checkHandles())
         return false
@@ -606,6 +498,13 @@ BlockChatInput() {
     return true
 }
 
+/**
+ * Unblock chat input from the player. The player can send messages and
+ * commands again.
+ *
+ * @category SAMP
+ * @returns `true` if successful, `false` otherwise
+ */
 UnBlockChatInput() {
     if(!checkHandles())
         return false
@@ -622,6 +521,12 @@ UnBlockChatInput() {
     return true
 }
 
+/**
+ * Retrieve the server's name which the player is connected to.
+ *
+ * @category SAMP
+ * @returns The server name as a string, or -1 on failure
+ */
 GetServerName() {
     if(!checkHandles())
         return -1
@@ -646,6 +551,12 @@ GetServerName() {
     return ServerName
 }
 
+/**
+ * Retrieve the server's IP which the player is connected to.
+ *
+ * @category SAMP
+ * @returns The server's IP as a string, or -1 on failure
+ */
 GetServerIp() {
     if(!checkHandles())
         return -1
@@ -669,6 +580,12 @@ GetServerIp() {
     return ServerIP
 }
 
+/**
+ * Retrieve the server's port which the player is connected to.
+ *
+ * @category SAMP
+ * @returns The server's port as a integer, or -1 on failure
+ */
 GetServerPort() {
     if(!checkHandles())
         return -1
@@ -692,6 +609,12 @@ GetServerPort() {
     return ServerPort
 }
 
+/**
+ * Retrieve the current weather ID.
+ *
+ * @category SAMP
+ * @returns The weather ID as a integer, or -1 on failure
+ */
 GetWeatherId() {
     if(!checkHandles())
         return -1
@@ -706,6 +629,12 @@ GetWeatherId() {
     return WeatherID
 }
 
+/**
+ * Retrieve the current weather's name.
+ *
+ * @category SAMP
+ * @returns The weather's name as a string, or empty string on failure
+ */
 GetWeatherName() {
 	id := getWeatherID()  
     if(id >= 0 && id < 23)
@@ -715,6 +644,12 @@ GetWeatherName() {
     return ""
 }
 
+/**
+ * Retrieve the player's health
+ *
+ * @category Local Player
+ * @returns The player's health as an integer or float, or -1 on failure
+ */
 GetPlayerHealth() {
     if(!checkHandles())
         return -1
@@ -736,6 +671,12 @@ GetPlayerHealth() {
     return Round(fHealth)
 }
 
+/**
+ * Retrieve the player's armor
+ *
+ * @category Local Player
+ * @returns The player's armor as an integer or float, or -1 on failure
+ */
 GetPlayerArmor() {
     if(!checkHandles())
         return -1
@@ -757,6 +698,12 @@ GetPlayerArmor() {
     return Round(fHealth)
 }
 
+/**
+ * Retrieve the player's current interior ID
+ *
+ * @category Local Player
+ * @returns The player's interior ID as an integer, or -1 on failure
+ */
 GetPlayerInteriorId() {
     if(!checkHandles())
         return -1
@@ -771,6 +718,12 @@ GetPlayerInteriorId() {
     return iid
 }
 
+/**
+ * Retrieve the player's current skin ID
+ *
+ * @category Local Player
+ * @returns The player's skin ID as an integer, or -1 on failure
+ */
 GetPlayerSkinId() {
     if(!checkHandles())
         return -1
@@ -792,6 +745,12 @@ GetPlayerSkinId() {
     return SkinID
 }
 
+/**
+ * Retrieve the player's money
+ *
+ * @category Local Player
+ * @returns The player's money as an integer, or -1 on failure
+ */
 GetPlayerMoney() {
     if(!checkHandles())
         return ""
@@ -799,18 +758,24 @@ GetPlayerMoney() {
     money := readMem(hGTA, ADDR_CPED_MONEY, 4, "Int")
     if(ErrorLevel) {
         ErrorLevel := ERROR_READ_MEMORY
-        return ""
+        return "" ; TODO return -1
     }
     
     ErrorLevel := ERROR_OK
     return money
 }
 
+/**
+ * Retrieve the player's wanted level
+ *
+ * @category Local Player
+ * @returns The player's wanted level as an integer, or -1 on failure
+ */
 GetPlayerWanteds() {
     if(!checkHandles())
         return -1
  
-    dwPtr := 0xB7CD9C
+    dwPtr := 0xB7CD9C ; TODO document meaning of this static address
     dwPtr := readDWORD(hGTA, dwPtr)
     if(ErrorLevel) {
         ErrorLevel := ERROR_READ_MEMORY
@@ -827,11 +792,17 @@ GetPlayerWanteds() {
     return Wanteds
 }
 
+/**
+ * Retrieve the player's weapon ID
+ *
+ * @category Local Player
+ * @returns The player's weapon ID as an integer, or -1 on failure
+ */
 GetPlayerWeaponId() {
     if(!checkHandles())
         return 0
     
-    WaffenId := readMem(hGTA, 0xBAA410, 4, "byte")
+    WaffenId := readMem(hGTA, 0xBAA410, 4, "byte") ; TODO english
     if(ErrorLevel) {
         ErrorLevel := ERROR_READ_MEMORY
         return -1
@@ -840,6 +811,12 @@ GetPlayerWeaponId() {
    return WaffenId
 }
 
+/**
+ * Retrieve the player's weapon name
+ *
+ * @category Local Player
+ * @returns The player's weapon name as string, or empty string on failure
+ */
 GetPlayerWeaponName() {
     id := GetPlayerWeaponId()
     if(id >= 0 && id < 44)
@@ -849,6 +826,16 @@ GetPlayerWeaponName() {
     return ""
 }
 
+/**
+ * Retrieve the player's state, e.g. on foot, driving, dead, ...
+ * <p>
+ * See [Player States | open.mp](https://open.mp/en/docs/scripting/resources/playerstates)
+ * for available states.
+ * </p>
+ *
+ * @category Local Player
+ * @returns (TODO verify) The player's state as an integer, or -1 on failure
+ */
 GetPlayerState() {
     if(!checkHandles())
         return -1
@@ -869,6 +856,12 @@ GetPlayerState() {
     return State
 }
 
+/**
+ * Check if the player has their game paused (i.e., in the `ESC` menu)
+ *
+ * @category Local Player
+ * @returns `true` if the game is paused, `false` otherwise
+ */
 IsPlayerInMenu() {
     if(!checkHandles())
         return -1
@@ -883,6 +876,12 @@ IsPlayerInMenu() {
     return IsInMenu
 }
 
+/**
+ * Get the player's X position on map
+ *
+ * @category Local Player
+ * @returns position on X axis as float, or -1 on failure
+ */
 GetPlayerMapPosX() {
     if(!checkHandles())
         return -1
@@ -897,6 +896,12 @@ GetPlayerMapPosX() {
     return MapPosX
 }
 
+/**
+ * Get the player's Y position on map
+ *
+ * @category Local Player
+ * @returns position on Y axis as float, or -1 on failure
+ */
 GetPlayerMapPosY() {
     if(!checkHandles())
         return -1
@@ -911,6 +916,12 @@ GetPlayerMapPosY() {
     return MapPosY
 }
 
+/**
+ * Get the player's map zoom level
+ *
+ * @category Local Player
+ * @returns zoom level as float, or -1 on failure
+ */
 GetPlayerMapZoom() {
     if(!checkHandles())
         return -1
@@ -925,12 +936,19 @@ GetPlayerMapZoom() {
     return MapZoom
 }
 
-IsPlayerFreezed() {
-    if(!checkHandles())
+
+/**
+ * Check if the player is frozen.
+ *
+ * @category Local Player
+ * @returns `true` if the player is frozen, `false` otherwise
+ */
+IsPlayerFrozen() {
+    if (!checkHandles())
         return -1
     
     IPF := readMem(hGTA, 0x690495, 2, "byte")    
-    if(ErrorLevel) {
+    if (ErrorLevel) {
         ErrorLevel := ERROR_READ_MEMORY
         return -1
     }
@@ -939,6 +957,27 @@ IsPlayerFreezed() {
     return IPF
 }
 
+/**
+ * Check if the player is frozen.
+ * <p>
+ * While the method's name has a typo ("Freezed" instead of "Frozen"), it is kept
+ * for backward compatibility for now.
+ * </p>
+ *
+ * @category Local Player
+ * @deprecated Use [`IsPlayerFrozen`](./IsPlayerFrozen) instead.
+ * @returns `true` if the player is frozen, `false` otherwise
+ */
+IsPlayerFreezed() {
+    return IsPlayerFrozen()
+}
+
+/**
+ * Check if the player is in any vehicle.
+ *
+ * @category Local Player
+ * @returns `true` if the player is in a vehicle, `false` otherwise
+ */
 IsPlayerInAnyVehicle()
 {
     if(!checkHandles())
@@ -953,6 +992,12 @@ IsPlayerInAnyVehicle()
     return (dwVehPtr > 0)
 }
 
+/**
+ * Check if the player is the driver of the vehicle they are in.
+ *
+ * @category Local Player
+ * @returns `true` if the player is the driver, `false` otherwise
+ */
 IsPlayerDriver() {
     if(!checkHandles())
         return -1
@@ -982,6 +1027,12 @@ IsPlayerDriver() {
     return (dwVal==dwCPedPtr)
 }
 
+/**
+ * Retrieves the current health of the player's vehicle.
+ *
+ * @category Vehicles
+ * @returns Numeric vehicle health value. Exact range/units depend on the server/API.
+ */
 GetVehicleHealth() {
     if(!checkHandles())
         return -1
@@ -1003,6 +1054,12 @@ GetVehicleHealth() {
     return Round(fHealth)
 }
 
+/**
+ * Determine the vehicle type for the current vehicle.
+ *
+ * @category Vehicles
+ * @returns Integer vehicle type (1=car,2=boat,3=heli,4=truck,5=airplane,6=bike), or `0` on failure
+ */
 GetVehicleType() {
     if(!checkHandles())
         return 0
@@ -1050,6 +1107,12 @@ GetVehicleType() {
     return 0
 }
 
+/**
+ * Retrieve the vehicle model id for the current vehicle.
+ *
+ * @category Vehicles
+ * @returns Model ID as integer, or `0` on failure
+ */
 GetVehicleModelId() {
     if(!checkHandles())
         return 0
@@ -1073,6 +1136,12 @@ GetVehicleModelId() {
     return sVal
 }
 
+/**
+ * Retrieve the model name for the current vehicle.
+ *
+ * @category Vehicles
+ * @returns The vehicle model name as string, or empty string on failure
+ */
 GetVehicleModelName() {
     id:=GetVehicleModelId()
     if(id > 400 && id < 611)
@@ -1082,6 +1151,12 @@ GetVehicleModelName() {
     return ""
 }
 
+/**
+ * Retrieve whether vehicle lights are on for the current vehicle.
+ *
+ * @category Vehicles
+ * @returns `true` if lights are on, `false` otherwise, or `-1` on error
+ */
 GetVehicleLightState() {
     if(!checkHandles())
         return -1
@@ -1105,7 +1180,12 @@ GetVehicleLightState() {
     return (dwVal>0)
 }
 
-
+/**
+ * Retrieve whether the current vehicle's engine is on.
+ *
+ * @category Vehicles
+ * @returns `true` if engine is on, `false` otherwise, or `-1` on error
+ */
 GetVehicleEngineState() {
     if(!checkHandles())
         return -1
@@ -1130,6 +1210,13 @@ GetVehicleEngineState() {
 }
 
 
+
+/**
+ * Retrieve whether the current vehicle is locked.
+ *
+ * @category Vehicles
+ * @returns `true` if locked, `false` otherwise, or `-1` on error
+ */
 GetVehicleLockState() {
     if(!checkHandles())
         return -1
@@ -1153,6 +1240,12 @@ GetVehicleLockState() {
     return (dwVal==2)
 }
 
+/**
+ * Retrieve the first color index of the current vehicle.
+ *
+ * @category Vehicles
+ * @returns Color index as integer, or `0` on failure
+ */
 GetVehicleColor1() {
     if(!checkHandles())
         return 0
@@ -1177,6 +1270,12 @@ GetVehicleColor1() {
     return sVal
 }
 
+/**
+ * Retrieve the second color index of the current vehicle.
+ *
+ * @category Vehicles
+ * @returns Color index as integer, or `0` on failure
+ */
 GetVehicleColor2() {
     if(!checkHandles())
         return 0
@@ -1201,6 +1300,12 @@ GetVehicleColor2() {
     return sVal
 }
 
+/**
+ * Calculate the current vehicle speed (approx.) for the vehicle the player is in.
+ *
+ * @category Vehicles
+ * @returns Speed as float, or `-1` on failure
+ */
 GetVehicleSpeed() {
     if(!checkHandles())
         return -1
@@ -1221,6 +1326,12 @@ GetVehicleSpeed() {
 	return fVehicleSpeed
 }
 
+/**
+ * Get the current radio station id for player vehicle.
+ *
+ * @category Vehicles
+ * @returns Station id as integer, or `-1` on failure
+ */
 GetPlayerRadiostationId() {
     if(!checkHandles())
         return -1
@@ -1237,6 +1348,12 @@ GetPlayerRadiostationId() {
     return RadioStationID
 }
 
+/**
+ * Get the current radio station name for the player vehicle.
+ *
+ * @category Vehicles
+ * @returns Station name as string, or empty string on failure
+ */
 GetPlayerRadiostationName() {
     if(IsPlayerInAnyVehicle() == 0)
         return -1
@@ -1253,6 +1370,12 @@ GetPlayerRadiostationName() {
     return ""
 }
 
+/**
+ * Retrieve the vehicle number plate for the current vehicle.
+ *
+ * @category Vehicles
+ * @returns The vehicle number plate as string, or empty string on failure
+ */
 GetVehicleNumberPlate() {
     if(!checkHandles())
         return ""
@@ -1322,8 +1445,12 @@ GetVehicleNumberPlate() {
     return ""
 }
 
-; ##### Extra-Player-Funktionen #####
-
+/**
+ * Get the PED id the player is currently targeting.
+ *
+ * @category Players
+ * @returns PED pointer/id as integer, or `0` on failure
+ */
 GetTargetPed() {
 	if(!checkHandles())
         return 0
@@ -1346,6 +1473,15 @@ GetTargetPed() {
 	return dwAddress
 }
 
+/**
+ * Convert world coordinates to screen coordinates.
+ *
+ * @category Players
+ * @param fX X world coordinate
+ * @param fY Y world coordinate
+ * @param fZ Z world coordinate
+ * @returns Array `[screenX, screenY, depth]` on success, or `false` on failure
+ */
 CalcScreenCoords(fX, fY, fZ) {
 	if(!checkHandles())
 		return false
@@ -1389,6 +1525,13 @@ CalcScreenCoords(fX, fY, fZ) {
         return [frX,frY,frZ]
 }
 
+/**
+ * Get the game PED pointer for a scoreboard player id.
+ *
+ * @category Players
+ * @param dwId Player id (0..)
+ * @returns PED pointer (integer) or `0` if not found
+ */
 GetPedById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -1416,6 +1559,13 @@ GetPedById(dwId) {
     return 0
 }
 
+/**
+ * Get the scoreboard player id for a given PED pointer.
+ *
+ * @category Players
+ * @param dwPed PED pointer
+ * @returns Player id as integer, or `-1` if not found
+ */
 GetIdByPed(dwPed) {
     dwPed += 0
     dwPed := Floor(dwPed)
@@ -1449,6 +1599,12 @@ GetIdByPed(dwPed) {
     return -1
 }
 
+/**
+ * Return information about streamed-in players from the scoreboard.
+ *
+ * @category Players
+ * @returns An array/object of streamed player info, or empty string/array on failure
+ */
 GetStreamedInPlayersInfo() {
     r:=[]
     if(iRefreshScoreboard+iUpdateTick > A_TickCount)
@@ -1486,6 +1642,14 @@ GetStreamedInPlayersInfo() {
     return r
 }
 
+/**
+ * Call a callback function for every streamed-in player.
+ *
+ * @category Players
+ * @param cfunc Function name to call for each player (receives the player object)
+ * @param dist Optional max distance filter (default: large)
+ * @returns `true` on success, `false` otherwise
+ */
 CallFuncForAllStreamedInPlayers(cfunc, dist=0x7fffffff) {
     cfunc := "" cfunc
     dist += 0
@@ -1513,12 +1677,26 @@ CallFuncForAllStreamedInPlayers(cfunc, dist=0x7fffffff) {
     return true
 }
 
+/**
+ * Calculate the Euclidean distance between two 3D positions.
+ *
+ * @category Players
+ * @param pos1 First position array `[x,y,z]`
+ * @param pos2 Second position array `[x,y,z]`
+ * @returns Distance as float, or `0` if inputs invalid
+ */
 GetDist(pos1, pos2) {
-	if(!pos1 || !pos2)
-		return 0
+ 	if(!pos1 || !pos2)
+ 		return 0
     return Sqrt((pos1[1]-pos2[1])*(pos1[1]-pos2[1])+(pos1[2]-pos2[2])*(pos1[2]-pos2[2])+(pos1[3]-pos2[3])*(pos1[3]-pos2[3]))
 }
 
+/**
+ * Return the PED pointer of the closest streamed-in player.
+ *
+ * @category Players
+ * @returns PED pointer of closest player, or `-1` on error
+ */
 GetClosestPlayerPed() {
     dist := 0x7fffffff              ;max int32
     p := GetStreamedInPlayersInfo()
@@ -1541,6 +1719,12 @@ GetClosestPlayerPed() {
     return PED
 }
 
+/**
+ * Return the id of the closest streamed-in player.
+ *
+ * @category Players
+ * @returns Player id of closest player, or `-1` on error
+ */
 GetClosestPlayerId() {
     dist := 0x7fffffff              ;max int32
     p := GetStreamedInPlayersInfo()
@@ -1562,6 +1746,12 @@ GetClosestPlayerId() {
     return id
 }
 
+/**
+ * Retrieve the current number of online players from current SA:MP server.
+ *
+ * @category Scoreboard
+ * @returns Number of online players as integer, or `-1` on failure
+ */
 CountOnlinePlayers() {
     if(!checkHandles())
         return -1
@@ -1585,6 +1775,19 @@ CountOnlinePlayers() {
     return OnlinePlayers
 }
 
+/**
+ * Get the world coordinates for a given PED pointer. The underlying `CPed` struct
+ * is the GTA:SA native struct, so not tied to SA:MP. The position of the rendered
+ * ped is a vector of floats, stored at `PED+0x14 -> +0x30 (X), +0x34 (Y), +0x38 (Z)`.
+ * For more information, please consult [Memory Addresses (SA) - GTAMods Wiki](https://gtamods.com/wiki/Memory_Addresses_(SA)#General)
+ *
+ * <p>
+ * In SA:MP, if the ped is not streamed in, this function will fail.
+ * </p>
+ * @category Players
+ * @param dwPED PED pointer
+ * @returns Array of coordinates `[X, Y, Z]` as floats or empty string on failure
+ */
 GetPedCoordinates(dwPED) {
     dwPED += 0
     dwPED := Floor(dwPED)
@@ -1622,6 +1825,13 @@ GetPedCoordinates(dwPED) {
     return [fX, fY, fZ]
 }
 
+/**
+ * Get the target player's position by scoreboard id.
+ *
+ * @category Players
+ * @param dwId Player id
+ * @returns Array of coordinates `[X, Y, Z]` as floats or empty string on failure
+ */
 GetTargetPosById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -1653,6 +1863,13 @@ GetTargetPosById(dwId) {
     return ""
 }
 
+/**
+ * Retrieve the skin id for a target PED pointer.
+ *
+ * @category Players
+ * @param dwPED PED pointer
+ * @returns Skin id as integer, or `-1` on failure
+ */
 GetTargetPlayerSkinIdByPed(dwPED) {
     if(!checkHandles())
         return -1
@@ -1668,6 +1885,13 @@ GetTargetPlayerSkinIdByPed(dwPED) {
     return SkinID
 }
 
+/**
+ * Retrieve the skin id for a player identified by scoreboard id.
+ *
+ * @category Players
+ * @param dwId Player id
+ * @returns Skin id as integer, or `-1` on failure
+ */
 GetTargetPlayerSkinIdById(dwId) {
     if(!checkHandles())
         return -1
@@ -1682,7 +1906,14 @@ GetTargetPlayerSkinIdById(dwId) {
     return SkinID
 }
 
-; ##### Extra-Player-Fahrzeug-Funktionen #####
+; ##### Vehicles-Funktionen #####
+/**
+ * Get vehicle pointer for a PED pointer.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Vehicle pointer or `0` if none/failure
+ */
 GetVehiclePointerByPed(dwPED) {
     dwPED += 0
     dwPED := Floor(dwPED)
@@ -1699,6 +1930,13 @@ GetVehiclePointerByPed(dwPED) {
 	return dwAddress
 }
 
+/**
+ * Get vehicle pointer for a player id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns Vehicle pointer or `0` if none/failure
+ */
 GetVehiclePointerById(dwId) {
     if(!dwId)
         return 0
@@ -1716,6 +1954,13 @@ GetVehiclePointerById(dwId) {
 	return dwAddress
 }
 
+/**
+ * Check whether a given PED pointer is in any vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns `1` if in a vehicle, `0` if not, `-1` on error
+ */
 IsTargetInAnyVehicleByPed(dwPED) {
     if(!checkHandles())
         return -1
@@ -1736,6 +1981,13 @@ IsTargetInAnyVehicleByPed(dwPED) {
     }
 }
 
+/**
+ * Check whether a player id is in any vehicle.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns `1` if in a vehicle, `0` if not, `-1` on error
+ */
 IsTargetInAnyVehicleById(dwId) {
     if(!checkHandles())
         return -1
@@ -1757,6 +2009,13 @@ IsTargetInAnyVehicleById(dwId) {
     }
 }
 
+/**
+ * Retrieve vehicle health for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPed PED pointer
+ * @returns Vehicle health (rounded) or `-1` on failure
+ */
 GetTargetVehicleHealthByPed(dwPed) {
     if(!checkHandles())
         return -1
@@ -1773,6 +2032,13 @@ GetTargetVehicleHealthByPed(dwPed) {
     return Round(fHealth)
 }
 
+/**
+ * Retrieve vehicle health for a player's vehicle by id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns Vehicle health (rounded) or `-1` on failure
+ */
 GetTargetVehicleHealthById(dwId) {
     if(!checkHandles())
         return -1
@@ -1789,6 +2055,13 @@ GetTargetVehicleHealthById(dwId) {
     return Round(fHealth)
 }
 
+/**
+ * Determine the vehicle type for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Integer vehicle type (1=car,2=boat,3=heli,4=truck,5=airplane,6=bike), or `0` on failure
+ */
 GetTargetVehicleTypeByPed(dwPED) {
     if(!checkHandles())
         return 0
@@ -1832,6 +2105,13 @@ GetTargetVehicleTypeByPed(dwPED) {
     return 0
 }
 
+/**
+ * Determine the vehicle type for a player's vehicle by id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns Integer vehicle type (1=car,2=boat,3=heli,4=truck,5=airplane,6=bike), or `0` on failure
+ */
 GetTargetVehicleTypeById(dwId) {
     if(!checkHandles())
         return 0
@@ -1875,6 +2155,13 @@ GetTargetVehicleTypeById(dwId) {
     return 0
 }
 
+/**
+ * Retrieve the vehicle model id for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Model id as integer, or `0` on failure
+ */
 GetTargetVehicleModelIdByPed(dwPED) {
     if(!checkHandles())
         return 0
@@ -1894,6 +2181,13 @@ GetTargetVehicleModelIdByPed(dwPED) {
     return sVal
 }
 
+/**
+ * Retrieve the vehicle model id for a player's vehicle by id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns Model id as integer, or `0` on failure
+ */
 GetTargetVehicleModelIdById(dwId) {
     if(!checkHandles())
         return 0
@@ -1913,6 +2207,13 @@ GetTargetVehicleModelIdById(dwId) {
     return sVal
 }
 
+/**
+ * Retrieve the vehicle model name for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Model name string, or empty on failure
+ */
 GetTargetVehicleModelNameByPed(dwPED) {
     id := GetTargetVehicleModelIdByPed(dwPED)
     if(id > 400 && id < 611)
@@ -1922,6 +2223,13 @@ GetTargetVehicleModelNameByPed(dwPED) {
     return ""
 }
 
+/**
+ * Retrieve the vehicle model name for a player's vehicle by id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns Model name string, or empty on failure
+ */
 GetTargetVehicleModelNameById(dwId) {
     id := GetTargetVehicleModelIdById(dwId)
     if(id > 400 && id < 611)
@@ -1931,6 +2239,13 @@ GetTargetVehicleModelNameById(dwId) {
     return ""
 }
 
+/**
+ * Retrieve whether vehicle lights are on for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns `true` if lights on, `false` otherwise, or `-1` on error
+ */
 GetTargetVehicleLightStateByPed(dwPED) {
     if(!checkHandles())
         return -1
@@ -1950,6 +2265,13 @@ GetTargetVehicleLightStateByPed(dwPED) {
     return (dwVal>0)
 }
 
+/**
+ * Retrieve whether vehicle lights are on for a player's vehicle by id.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns `true` if lights on, `false` otherwise, or `-1` on error
+ */
 GetTargetVehicleLightStateById(dwId) {
     if(!checkHandles())
         return -1
@@ -1969,6 +2291,13 @@ GetTargetVehicleLightStateById(dwId) {
     return (dwVal>0)
 }
 
+/**
+ * Retrieve whether a PED's vehicle is locked.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns `true` if locked, `false` otherwise, or `-1` on error
+ */
 GetTargetVehicleLockStateByPed(dwPED) {
     if(!checkHandles())
         return -1
@@ -1988,6 +2317,13 @@ GetTargetVehicleLockStateByPed(dwPED) {
     return (dwVal==2)
 }
 
+/**
+ * Retrieve whether a player's vehicle (by id) is locked.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @returns `true` if locked, `false` otherwise, or `-1` on error
+ */
 GetTargetVehicleLockStateById(dwId) {
     if(!checkHandles())
         return -1
@@ -2007,6 +2343,13 @@ GetTargetVehicleLockStateById(dwId) {
     return (dwVal==2)
 }
 
+/**
+ * Retrieve the first color index for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Color index as integer, or `0` on failure
+ */
 GetTargetVehicleColor1ByPed(dwPED) {
     if(!checkHandles())
         return 0
@@ -2027,11 +2370,18 @@ GetTargetVehicleColor1ByPed(dwPED) {
     return sVal
 }
 
-GetTargetVehicleColor1ById(dwId) {
+/**
+ * Retrieve the first color index for a vehicle by player ID.
+ *
+ * @category Vehicles
+ * @param dwID Player ID
+ * @returns Color index as integer, or `0` on failure
+ */
+GetTargetVehicleColor1ById(dwID) {
     if(!checkHandles())
         return 0
     
-    dwAddr := GetVehiclePointerById(dwId)
+    dwAddr := GetVehiclePointerById(dwID)
     
     if(!dwAddr)
         return 0
@@ -2047,6 +2397,13 @@ GetTargetVehicleColor1ById(dwId) {
     return sVal
 }
 
+/**
+ * Retrieve the second color index for a PED's vehicle.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @returns Color index as integer, or `0` on failure
+ */
 GetTargetVehicleColor2ByPed(dwPED) {
     if(!checkHandles())
         return 0
@@ -2067,6 +2424,13 @@ GetTargetVehicleColor2ByPed(dwPED) {
     return sVal
 }
 
+/**
+ * Retrieve the second color index for a vehicle by player ID.
+ *
+ * @category Vehicles
+ * @param dwID Player ID
+ * @returns Color index as integer, or `0` on failure
+ */
 GetTargetVehicleColor2ById(dwId) {
     if(!checkHandles())
         return 0
@@ -2087,7 +2451,16 @@ GetTargetVehicleColor2ById(dwId) {
     return sVal
 }
 
-GetTargetVehicleSpeedByPed(dwPED) {
+/**
+ * Retrieve the speed of a ped's vehicle.
+ * The `speedMultiplier` parameter can be adjusted per server to get more accurate speed values.
+ *
+ * @category Vehicles
+ * @param dwPED PED pointer
+ * @param speedMultiplier (float) Optional speed multiplier (default: 1.43)
+ * @returns Vehicle speed as float, or `-1` on failure
+ */
+GetTargetVehicleSpeedByPed(dwPED, speedMultiplier := 1.43) {
     if(!checkHandles())
         return -1
  
@@ -2097,12 +2470,21 @@ GetTargetVehicleSpeedByPed(dwPED) {
     fSpeedY := readMem(hGTA, dwAddr + ADDR_VEHICLE_Y, 4, "float")
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
-    fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhùht bzw. verringert
+    fVehicleSpeed := sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
+    fVehicleSpeed := (fVehicleSpeed * 100) * speedMultiplier
  
 	return fVehicleSpeed
 }
 
+/**
+ * Retrieve the speed of a player's vehicle by id.
+ * The `speedMultiplier` parameter can be adjusted per server to get more accurate speed values.
+ *
+ * @category Vehicles
+ * @param dwId Player id
+ * @param speedMultiplier (float) Optional speed multiplier (default: 1.43)
+ * @returns Vehicle speed as float, or `-1` on failure
+ */
 GetTargetVehicleSpeedById(dwId) {
     if(!checkHandles())
         return -1
@@ -2113,17 +2495,22 @@ GetTargetVehicleSpeedById(dwId) {
     fSpeedY := readMem(hGTA, dwAddr + ADDR_VEHICLE_Y, 4, "float")
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
-    fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhùht bzw. verringert
+    fVehicleSpeed := sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
+    fVehicleSpeed := (fVehicleSpeed * 100) * speedMultiplier
  
 	return fVehicleSpeed
 }
 
 
-; ##### Sonstiges #####
-; written by David_Luchs %
-; returns nth message of chatlog (beggining from bottom)
-; -1 = error
+/**
+ * Get a specific line from the SAMP chat log.
+ *
+ * @category Chat
+ * @param Line Line number from the end (0 = last line)
+ * @param Output variable to store the output line (*pass by reference*)
+ * @param timestamp Optional boolean to include timestamp (default: `false|0` = no)
+ * @param color Optional boolean to include color codes (default: `false|0` = no)
+ */
 GetChatLine(Line, ByRef Output, timestamp=0, color=0) {
 	chatindex := 0
 	FileRead, file, %A_MyDocuments%\GTA San Andreas User Files\SAMP\chatlog.txt
@@ -2147,6 +2534,15 @@ GetChatLine(Line, ByRef Output, timestamp=0, color=0) {
 	return
 }
 
+/**
+ * Patch SA:MP to prevent crash reports from being shown, which should suppress most crashes.
+ *
+ * While it may work for older SA:MP versions, this method won't likely work on `0.3.7-R5`.
+ *
+ * @category Utilities
+ * @experimental
+ * @returns `false` on failure
+ */
 AntiCrash() {
     If(!checkHandles())
         return false
@@ -2162,7 +2558,18 @@ AntiCrash() {
 }
 
 
-; ######################### Dialog Functions #########################
+/**
+ * Returns a pointer to SA:MP dialog struct. This allows you to read
+ * information in the currently opened dialog, such as type, text, caption, etc.
+ * 
+ * <p>
+ * Usually, there's no need to use this function directly, as this library exposes
+ * higher-level functions to get specific dialog information.
+ * </p>
+ *
+ * @category Dialogs
+ * @returns Pointer to dialog struct (DWord) or `false` on failure
+ */
 GetDialogStructPtr() {
 	if (!checkHandles()) {
 		ErrorLevel := ERROR_INVALID_HANDLE
@@ -2179,6 +2586,12 @@ GetDialogStructPtr() {
 	return dwPointer
 }
 
+/**
+ * Check whether a dialog is currently open.
+ *
+ * @category Dialogs
+ * @returns `true` if a dialog is open, `false` otherwise
+ */
 IsDialogOpen() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2194,6 +2607,12 @@ IsDialogOpen() {
 	return dwIsOpen ? true : false
 }
 
+/**
+ * Get the style/type of the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Dialog style as integer, or `-1` on failure
+ */
 GetDialogStyle() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2209,6 +2628,12 @@ GetDialogStyle() {
 	return style
 }
 
+/**
+ * Get the ID of the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Dialog ID as integer, or `-1` on failure
+ */
 GetDialogId() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2224,6 +2649,13 @@ GetDialogId() {
 	return id
 }
 
+/**
+ * Set the ID of the currently opened dialog.
+ *
+ * @category Dialogs
+ * @param id Dialog ID to set
+ * @returns `true` on success, `false` on failure
+ */
 SetDialogId(id) {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2239,6 +2671,12 @@ SetDialogId(id) {
 	return true
 }
 
+/**
+ * Get the index of the currently selected dialog line.
+ *
+ * @category Dialogs
+ * @returns Dialog line index as integer (1-based), or `0` on failure
+ */
 GetDialogIndex() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2260,6 +2698,12 @@ GetDialogIndex() {
 	return index + 1
 }
 
+/**
+ * Get the caption/title of the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Dialog caption as string, or empty string on failure
+ */
 GetDialogCaption() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2275,6 +2719,13 @@ GetDialogCaption() {
 	return text
 }
 
+/**
+ * Get the size of the dialog text at the text offset of a dialog struct.
+ *
+ * @category Dialogs
+ * @param dwAddress Offset of the dialog text
+ * @returns Size of the dialog text in bytes
+ */
 GetDialogTextSize(dwAddress) {
 	i := 0
 	Loop, 4096 {
@@ -2287,6 +2738,12 @@ GetDialogTextSize(dwAddress) {
 	return i
 }
 
+/**
+ * Get the text/content of the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Dialog text as string, or empty string on failure
+ */
 GetDialogText() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2311,6 +2768,12 @@ GetDialogText() {
 	return text
 }
 
+/**
+ * Get the number of lines in the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Number of dialog lines as integer, or `0` on failure
+ */
 GetDialogLineCount() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2332,6 +2795,20 @@ GetDialogLineCount() {
 	return count
 }
 
+/**
+ * Get a specific line from the currently opened dialog.
+ *
+ * <p>
+ * <b>Note:</b> It's currently not tested how this implementation really differs
+ * from [`GetDialogLine`](GetDialogLine). It may return different results.
+ * As this is suffixed with `__`, it's possible that this function has been considered deprecated.
+ * </p>
+ *
+ * @experimental
+ * @category Dialogs
+ * @param index Line index (1-based)
+ * @returns Dialog line as string, or empty string on failure
+ */
 GetDialogLine__(index) {
 	if (GetDialogLineCount > index)
 		return ""
@@ -2359,6 +2836,13 @@ GetDialogLine__(index) {
 	return line
 }
 
+/**
+ * Get a specific line from the currently opened dialog.
+ *
+ * @category Dialogs
+ * @param index Line index (1-based)
+ * @returns Dialog line as string, or empty string on failure
+ */
 GetDialogLine(index) {
 	lines := GetDialogLines()
 	if (index > lines.Length())
@@ -2370,6 +2854,12 @@ GetDialogLine(index) {
 	return lines[index]
 }
 
+/**
+ * Get all lines from the currently opened dialog.
+ *
+ * @category Dialogs
+ * @returns Array of dialog lines, or `-1` on failure
+ */
 GetDialogLines() {
 	text := GetDialogText()
 	if (text == "")
@@ -2379,6 +2869,12 @@ GetDialogLines() {
 	return lines
 }
 
+/**
+ * Check whether button 1 is currently selected in the dialog.
+ *
+ * @category Dialogs
+ * @returns `true` if button 1 is selected, `false` otherwise
+ */
 IsDialogButton1Selected() {
 	dwPointer := GetDialogStructPtr()
 	if (ErrorLevel || !dwPointer)
@@ -2400,6 +2896,19 @@ IsDialogButton1Selected() {
 	return selected
 }
 
+/**
+ * Get all lines from the currently opened dialog.
+ *
+ * <p>
+ * <b>Note:</b> It's currently not tested how this implementation really differs
+ * from [`GetDialogLines`](GetDialogLines). It may return different results.
+ * As this is suffixed with `__`, it's possible that this function has been considered deprecated.
+ * </p>
+ *
+ * @experimental
+ * @category Dialogs
+ * @returns Array of dialog lines, or `-1` on failure
+ */
 GetDialogLines__() {
 	count := GetDialogLineCount()
 
@@ -2429,6 +2938,18 @@ GetDialogLines__() {
 	return lines
 }
 
+/**
+ * Show a dialog to the player.
+ *
+ * @category Dialogs
+ * @param style Dialog style/type (For a full list of available dialog styles, please consult [Dialog Styles | open.mp](https://open.mp/docs/scripting/resources/dialogstyles))
+ * @param caption Dialog caption/title
+ * @param text Dialog text/content
+ * @param button1 Text for button 1
+ * @param button2 Text for button 2 (optional)
+ * @param id Dialog ID (optional)
+ * @returns `true` on success, `false` on failure
+ */
 ShowDialog(style, caption, text, button1, button2 := "", id := 1) {
 	style += 0
 	style := Floor(style)
@@ -2506,8 +3027,13 @@ ShowDialog(style, caption, text, button1, button2 := "", id := 1) {
 	return true
 }
 
-; ##### Scoreboard-Funktionen #####
-
+/**
+ * Get player name by player's id. The data is retrieved from the server's scoreboard.
+ *
+ * @category Scoreboard
+ * @param dwId Player id
+ * @returns Player name as string, or empty string on failure
+ */
 GetPlayerNameById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -2529,6 +3055,13 @@ GetPlayerNameById(dwId) {
     return ""
 }
 
+/**
+ * Get player id by player's name. The data is retrieved from the server's scoreboard.
+ *
+ * @category Scoreboard
+ * @param wName Player name
+ * @returns Player id as integer, or `-1` on failure
+ */
 GetPlayerIdByName(wName) {
     wName := "" wName
     if(StrLen(wName) < 1 || StrLen(wName) > 24)
@@ -2555,6 +3088,13 @@ GetPlayerIdByName(wName) {
     return -1
 }
 
+/**
+ * Get player score by player's id. The data is retrieved from the server's scoreboard.
+ *
+ * @category Scoreboard
+ * @param dwId Player id
+ * @returns Player score as string, or empty string on failure
+ */
 GetPlayerScoreById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -2576,6 +3116,13 @@ GetPlayerScoreById(dwId) {
     return ""
 }
 
+/**
+ * Get player ping by player's id. The data is retrieved from the server's scoreboard.
+ *
+ * @category Scoreboard
+ * @param dwId Player id
+ * @returns Player ping as integer, or `-1` on failure
+ */
 GetPlayerPingById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -2597,6 +3144,13 @@ GetPlayerPingById(dwId) {
     return -1
 }
 
+/**
+ * Check whether a player is an NPC by player's id. The data is retrieved from the server's scoreboard.
+ *
+ * @category Scoreboard
+ * @param dwId Player id
+ * @returns `1` if NPC, `0` if not, or `-1` on failure
+ */
 IsNPCById(dwId) {
     dwId += 0
     dwId := Floor(dwId)
@@ -2618,7 +3172,13 @@ IsNPCById(dwId) {
     return -1
 }
 
-; internal stuff
+
+/**
+ * Invoke SA:MP's internal function to update scoreboard data.
+ *
+ * @category Scoreboard
+ * @returns `true` on success, `false` on failure
+ */
 UpdateScoreboardDataEx() {
     if(!checkHandles())
         return false
@@ -2654,10 +3214,27 @@ UpdateScoreboardDataEx() {
     closeProcess(hThread)
     
     return true
-    
 }
 
-; internal stuff
+/**
+ * Update the local scoreboard data cache. The data is stored in a global object array `oScoreboardData`.
+ * Before actually caching, this function calls [`UpdateScoreboardDataEx`](UpdateScoreboardDataEx) in order 
+ * to fetch latest scoreboard data first. Then, the local player's data is read and cached, and finally, 
+ * all remote players' data.
+ *
+ * <p>
+ * <b>Note</b> 
+ * <ul>
+ *   <li>This function is automatically called by other scoreboard-related functions when needed.</li>
+ *   <li>Most functions that invoke this function check whether the scoreboard data is still fresh by comparing
+ *   the current tick count with the last refresh tick count plus an update interval (`iUpdateTick`).</li>
+ *   <li>If the logic errors occur during memory reading,<ul><li>the function will return `false`</li><li>eventually, the global error level `ErrorLevel` will be set to `ERROR_READ_MEMORY`</li><li>the global scoreboard data cache may not be complete</li></ul></li>
+ * </ul>
+ * </p>
+ *
+ * @category Scoreboard
+ * @returns `true` on success, `false` on failure (SA:MP not available, `UpdateScoreboardDataEx` failed, memory read error, etc.)
+ */
 UpdateOScoreboardData() {
     if(!checkHandles())
         return 0
@@ -2861,19 +3438,16 @@ UpdateOScoreboardData() {
     return 1
 }
 
-PrintArray(array, depth=5, indentLevel="") {
-   for k,v in Array {
-      list.= indentLevel "[" k "]"
-      if (IsObject(v) && depth>1)
-         list.="`n" PrintArray(v, depth-1, indentLevel . "    ")
-      Else
-         list.=" => " v
-      list.="`n"
-   }
-   return rtrim(list, "`n")
-}
-
-; ##### %Checkpointsachen #####
+/**
+ * Set a checkpoint at the specified coordinates with the given size.
+ *
+ * @category Checkpoints
+ * @param fX X coordinate of the checkpoint as float
+ * @param fY Y coordinate of the checkpoint as float
+ * @param fZ Z coordinate of the checkpoint as float
+ * @param fSize Size of the checkpoint as float
+ * @returns `true` on success, `false` on failure
+ */
 SetCheckpoint(fX, fY, fZ, fSize) {
     if(!checkHandles())
         return false
@@ -2917,6 +3491,12 @@ SetCheckpoint(fX, fY, fZ, fSize) {
     return true
 }
 
+/**
+ * Disable the currently active checkpoint.
+ *
+ * @category Checkpoints
+ * @returns `true` on success, `false` on failure
+ */
 DisableCheckpoint() {
     if(!checkHandles())
         return false
@@ -2932,6 +3512,12 @@ DisableCheckpoint() {
     return true
 }
 
+/**
+ * Check whether a map marker currently exists.
+ *
+ * @category Checkpoints
+ * @returns `1` if a marker is created, `0` if not, or `false` on failure
+ */
 IsMarkerCreated() {
     If(!checkHandles())
         return false
@@ -2941,6 +3527,12 @@ IsMarkerCreated() {
     else return 1
 }
 
+/**
+ * Get the coordinates of the currently active map marker.
+ *
+ * @category Checkpoints
+ * @returns Array of coordinates `[X, Y, Z]` as floats, or `false` on failure
+ */
 CoordsFromRedmarker() {
     if(!checkhandles())
         return false
@@ -2948,7 +3540,13 @@ CoordsFromRedmarker() {
     f%i% := readFloat(hGTA, v)
     return [f1, f2, f3]
 }
-; ##### %#Positionsbestimmung  #####
+
+/**
+ * Get the player's current coordinates.
+ *
+ * @category Local Player
+ * @returns Array of coordinates `[X, Y, Z]` as floats, or `false` on failure
+ */
 GetPlayerCoordinates() {
     if(!checkHandles())
         return ""
@@ -2975,31 +3573,72 @@ GetPlayerCoordinates() {
     return [fX, fY, fZ]
 }
 
-GetPlayerPos(ByRef fX,ByRef fY,ByRef fZ) {
-        if(!checkHandles())
-                return 0
- 
-        fX := readFloat(hGTA, ADDR_POSITION_X)
-        if(ErrorLevel) {
-                ErrorLevel := ERROR_READ_MEMORY
-                return 0
-        }
- 
-        fY := readFloat(hGTA, ADDR_POSITION_Y)
-        if(ErrorLevel) {
-                ErrorLevel := ERROR_READ_MEMORY
-                return 0
-        }
- 
-        fZ := readFloat(hGTA, ADDR_POSITION_Z)
-        if(ErrorLevel) {
-                ErrorLevel := ERROR_READ_MEMORY
-                return 0
-        }
- 
-        ErrorLevel := ERROR_OK
+/**
+ * Get the player's current coordinates. Compared to [`GetPlayerCoordinates`](GetPlayerCoordinates),
+ * this function assumes that the passed parameters are references (pass-by-reference). That means
+ * that the function updates the passed variables directly.
+ *
+ * :::note
+ *
+ * This function works as the same as [`GetPlayerCoordinates`](GetPlayerCoordinates). When in doubt,
+ * we recommend using [`GetPlayerCoordinates`](GetPlayerCoordinates) instead.
+ *
+ * :::
+ *
+ * @category Local Player
+ * @param fX Variable to store X coordinate as float (pass-by-reference)
+ * @param fY Variable to store Y coordinate as float (pass-by-reference)
+ * @param fZ Variable to store Z coordinate as float (pass-by-reference)
+ * @returns `0` on success, `false` on failure
+ */
+GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ) {
+    if(!checkHandles())
+        return 0
+
+    fX := readFloat(hGTA, ADDR_POSITION_X)
+    if(ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return 0
+    }
+
+    fY := readFloat(hGTA, ADDR_POSITION_Y)
+    if(ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return 0
+    }
+
+    fZ := readFloat(hGTA, ADDR_POSITION_Z)
+    if(ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return 0
+    }
+
+    ErrorLevel := ERROR_OK
 }
 
+/**
+ * Calculate the zone name based on the provided coordinates.
+ *
+ * :::warning[Initialization]
+ *
+ * The first time this function is called, it initializes the zones and 
+ * cities data using [`InitZonesAndCities`](InitZonesAndCities).
+ *
+ * :::
+ *
+ * :::warning[Return Value For Unknown Zone]
+ *
+ * If the zone cannot be determined, the function returns `"Unbekannt"`. It's the German word for <em>Unknown</em>.
+ * This return value may change in future versions to more universal English term <em>Unknown</em>.
+ *
+ * :::
+ *
+ * @category Location
+ * @param posX X coordinate as float
+ * @param posY Y coordinate as float
+ * @param posZ Z coordinate as float
+ * @returns Zone name as string, or `"Unbekannt"` if not found
+ */
 CalculateZone(posX, posY, posZ) {
     if ( bInitZaC == 0 )
     {
@@ -3020,6 +3659,30 @@ CalculateZone(posX, posY, posZ) {
     return "Unbekannt"
 }
 
+/**
+ * Calculate the city name based on the provided coordinates. Compared to [`CalculateZone`](CalculateZone),
+ * cities define larger areas (actual cities) than zones, which can be smaller parts of cities or rural areas.
+ *
+ * :::warning[Initialization]
+ *
+ * The first time this function is called, it initializes the zones and 
+ * cities data using [`InitZonesAndCities`](InitZonesAndCities).
+ *
+ * :::
+ *
+ * :::warning[Return Value For Unknown City]
+ *
+ * If the city cannot be determined, the function returns `"Unbekannt"`. It's the German word for <em>Unknown</em>.
+ * This return value may change in future versions to more universal English term <em>Unknown</em>.
+ *
+ * :::
+ *
+ * @category Location
+ * @param posX X coordinate as float
+ * @param posY Y coordinate as float
+ * @param posZ Z coordinate as float
+ * @returns City name as string, or `"Unbekannt"` if not found
+ */
 CalculateCity(posX, posY, posZ) {
     if ( bInitZaC == 0 )
     {
@@ -3051,16 +3714,16 @@ CalculateCity(posX, posY, posZ) {
     return smallestCity
 }
 
-/*
-;do not work?
-GetCurrentZonecode() {
-    if(!checkHandles())
-        return ""
-    
-    return readString(hGTA, ADDR_ZONECODE, 5)
-}
-*/
-
+/**
+ * Check whether the player is within a certain range of a point in 3D space.
+ *
+ * @category Local Player
+ * @param _posX X coordinate of the point as float
+ * @param _posY Y coordinate of the point as float
+ * @param _posZ Z coordinate of the point as float
+ * @param _posRadius Radius around the point as float
+ * @returns `true` if the player is within range, `false` otherwise
+ */
 IsPlayerInRangeOfPoint(_posX, _posY, _posZ, _posRadius) {
 	GetPlayerPos(posX, posY, posZ)
 	X := posX -_posX
@@ -3070,7 +3733,16 @@ IsPlayerInRangeOfPoint(_posX, _posY, _posZ, _posRadius) {
 		return TRUE
 	return FALSE
 }
- 
+
+/**
+ * Check whether the player is within a certain range of a point in 2D space.
+ *
+ * @category Local Player
+ * @param _posX X coordinate of the point as float
+ * @param _posY Y coordinate of the point as float
+ * @param _posRadius Radius around the point as float
+ * @returns `true` if the player is within range, `false` otherwise
+ */
 IsPlayerInRangeOfPoint2D(_posX, _posY, _posRadius) {
 	GetPlayerPos(posX, posY, posZ)
 	X := posX - _posX
@@ -3080,16 +3752,55 @@ IsPlayerInRangeOfPoint2D(_posX, _posY, _posRadius) {
 	return FALSE
 }
 
+/**
+ * Get the player's current zone name.
+ *
+ * :::warning[Return Value For Unknown Zone]
+ *
+ * If the zone cannot be determined, the function returns `"Unbekannt"`. 
+ * It's the German word for <em>Unknown</em>. This return value may change in future versions to 
+ * more universal English term <em>Unknown</em>.
+ *
+ * Please refer to [`CalculateZone`](CalculateZone) as its return value is returned here.
+ *
+ * :::
+ *
+ * @category Location
+ * @returns Zone name as string, or `"Unbekannt"` if not found
+ */
 GetPlayerZone() {
 	aktPos := GetPlayerCoordinates()
 	return CalculateZone(aktPos[1], aktPos[2], aktPos[3])
 }
 
+/**
+ * Get the player's current city name.
+ *
+ * :::warning[Return Value For Unknown City]
+ *
+ * If the city cannot be determined, the function returns `"Unbekannt"`. 
+ * It's the German word for <em>Unknown</em>. This return value may change in future versions to 
+ * more universal English term <em>Unknown</em>.
+ *
+ * Please refer to [`CalculateCity`](CalculateCity) as its return value is returned here.
+ *
+ * :::
+ *
+ * @category Location
+ * @returns City name as string, or `"Unbekannt"` if not found
+ */
 GetPlayerCity() {
 	aktPos := GetPlayerCoordinates()
 	return CalculateCity(aktPos[1], aktPos[2], aktPos[3])
 }
 
+/**
+ * Get the color of a player by player's id.
+ *
+ * @category Scoreboard
+ * @param playerId Player id
+ * @returns Player color as hexadecimal string (e.g., "FF0000" for red), or "FFFFFF" on failure
+ */
 GetPlayerColor(playerId) {
     defaultColor = "FFFFFF"
 
@@ -3125,6 +3836,34 @@ _intToHex(int)
     return int
 }
 
+/**
+ * Initialize the zones and cities data.
+ *
+ * <p>
+ * As of right now, there is no way to find out if this function has been already called, thus
+ * this function having initialized its default data set. The functions that call this function
+ * for the first time will set a global variable `bInitZaC` to `1` in order to avoid multiple
+ * initializations. This allows you to check whether the zones and cities data has been initialized.
+ * So theoretically, if you want to supply your own zones and cities data
+ * <ol>
+ *   <li>you can set `bInitZaC` to `1`</li>
+ *   <li>then call your own functions to add zones and cities</li>
+ * </ol>
+ * before calling any function that relies on zones and cities data.
+ * </p>
+ * <p>
+ * Functions that use this function:
+ * <ul>
+ *   <li>[`CalculateZone`](CalculateZone)</li>
+ *   <li>[`CalculateCity`](CalculateCity)</li>
+ * </ul>
+ * Please note that there may be implicit calls to these functions. In general, the list above
+ * may not be exhaustive, and not up-to-date. The best way to find out which functions invoke this
+ * function is to search in code!
+ * </p>
+ *
+ * @category Location
+ */
 InitZonesAndCities() {
     AddCity("Las Venturas", 685.0, 476.093, -500.0, 3000.0, 3000.0, 500.0)
     AddCity("San Fierro", -3000.0, -742.306, -500.0, -1270.53, 1530.24, 500.0)
@@ -3516,6 +4255,18 @@ InitZonesAndCities() {
     AddZone("Los Santos", 44.615, -2892.970, -242.990, 2997.060, -768.027, 900.000)
 }
 
+/**
+ * Add a zone to the zone list.
+ * 
+ * @category Location
+ * @param sName The name of the zone.
+ * @param x1 The X coordinate of the first corner.
+ * @param y1 The Y coordinate of the first corner.
+ * @param z1 The Z coordinate of the first corner.
+ * @param x2 The X coordinate of the opposite corner.
+ * @param y2 The Y coordinate of the opposite corner.
+ * @param z2 The Z coordinate of the opposite corner.
+ */
 AddZone(sName, x1, y1, z1, x2, y2, z2) {
     global
     zone%nZone%_name := sName
@@ -3528,6 +4279,18 @@ AddZone(sName, x1, y1, z1, x2, y2, z2) {
     nZone := nZone + 1
 }
 
+/**
+ * Add a city to the city list.
+ * 
+ * @category Location
+ * @param sName The name of the city.
+ * @param x1 The X coordinate of the first corner.
+ * @param y1 The Y coordinate of the first corner.
+ * @param z1 The Z coordinate of the first corner.
+ * @param x2 The X coordinate of the opposite corner.
+ * @param y2 The Y coordinate of the opposite corner.
+ * @param z2 The Z coordinate of the opposite corner.
+ */
 AddCity(sName, x1, y1, z1, x2, y2, z2) {
     global
     city%nCity%_name := sName
@@ -3540,6 +4303,7 @@ AddCity(sName, x1, y1, z1, x2, y2, z2) {
     nCity := nCity + 1
 }
 
+; internal stuff
 writeMemory(hProcess,address,writevalue,length=4, datatype="int") {
   if(!hProcess) {
     ErrorLevel := ERROR_INVALID_HANDLE
@@ -3563,7 +4327,7 @@ writeMemory(hProcess,address,writevalue,length=4, datatype="int") {
   return true
 }
 
-; ##### Sonstiges #####
+; internal stuff
 checkHandles() {
     if (iRefreshHandles + 500 > A_TickCount)
         return true
@@ -3874,7 +4638,11 @@ writeRaw(hProcess, dwAddress, pBuffer, dwLen) {
     return true
 }
 
-; internal stuff
+/**
+ * Read a byte from the specified address in the process memory.
+ *
+ * @internal
+ */
 Memory_ReadByte(process_handle, address) {
 	VarSetCapacity(value, 1, 0)
 	DllCall("ReadProcessMemory", "UInt", process_handle, "UInt", address, "Str", value, "UInt", 1, "UInt *", 0)
@@ -4096,4 +4864,25 @@ __unicodeToAnsi(wString, nLen = 0) {
       , "Uint", 0
       , "Uint", 0)
     return sString
+}
+
+/**
+ * Recursively prints an array (including nested arrays) up to a specified depth.
+ *
+ * @category Utilities
+ * @param array The array to print.
+ * @param depth The maximum depth to recurse into nested arrays (default is 5).
+ * @param indentLevel The current indentation level (used for formatting).
+ * @return A formatted string representation of the array.
+ */
+PrintArray(array, depth=5, indentLevel="") {
+   for k,v in Array {
+      list.= indentLevel "[" k "]"
+      if (IsObject(v) && depth>1)
+         list.="`n" PrintArray(v, depth-1, indentLevel . "    ")
+      Else
+         list.=" => " v
+      list.="`n"
+   }
+   return rtrim(list, "`n")
 }

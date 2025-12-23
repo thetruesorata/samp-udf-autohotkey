@@ -1,0 +1,36 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #1a7cb7;
+  --ifm-color-primary-dark: #1770a5;
+  --ifm-color-primary-darker: #16699c;
+  --ifm-color-primary-darkest: #125780;
+  --ifm-color-primary-light: #1d88c9;
+  --ifm-color-primary-lighter: #1e8fd2;
+  --ifm-color-primary-lightest: #2e9ee1;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #54ade9;
+  --ifm-color-primary-dark: #38a0e5;
+  --ifm-color-primary-darker: #2a99e4;
+  --ifm-color-primary-darkest: #1980c5;
+  --ifm-color-primary-light: #70baed;
+  --ifm-color-primary-lighter: #7ec1ee;
+  --ifm-color-primary-lightest: #a8d5f4;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.alert--experimental, html[data-theme="dark"] .alert--experimental {
+	--ifm-alert-background-color: #9163c980;
+	--ifm-alert-background-color-highlight: #ce58f220;
+	--ifm-alert-border-color: #9d58f2;
+}
