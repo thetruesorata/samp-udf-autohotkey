@@ -47,7 +47,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            `https://github.com/${organizationName}/${projectName}/docs/`,
+            `https://github.com/${organizationName}/${projectName}/`,
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
           admonitions: {
@@ -64,7 +64,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            `https://github.com/${organizationName}/${projectName}/tree/main/packages/create-docusaurus/templates/shared/`,
+            `https://github.com/${organizationName}/${projectName}/`,
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
