@@ -1,6 +1,7 @@
 [tools]
 node = "25.2.1"
 "github:AutoHotkey/AutoHotkey" = "v1.1.37.02"
+github-cli = "2.83.2"
 
 [settings]
 experimental = true

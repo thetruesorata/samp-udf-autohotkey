@@ -1,6 +1,19 @@
+[[tools.github-cli]]
+version = "2.83.2"
+backend = "aqua:cli/cli"
+"platforms.linux-arm64" = { checksum = "sha256:b1a0c0a0fcf18524e36996caddc92a062355ed014defc836203fe20fba75a38e", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_arm64.tar.gz"}
+"platforms.linux-x64" = { checksum = "sha256:ca6e7641214fbd0e21429cec4b64a7ba626fd946d8f9d6d191467545b092015e", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_linux_amd64.tar.gz"}
+"platforms.macos-arm64" = { checksum = "sha256:ba3e0396ebbc8da17256144ddda503e4e79c8b502166335569f8390d6b75fa8d", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_macOS_arm64.zip"}
+"platforms.macos-x64" = { checksum = "sha256:6f1712519ccc768946791dc97da407bf188582345b73fef3d604d050ebf6f614", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_macOS_amd64.zip"}
+"platforms.windows-x64" = { checksum = "sha256:b95bf2d953e3bf497bb2c0aed97ffcc5ed8471b80f0920d663a92a6111f05135", url = "https://github.com/cli/cli/releases/download/v2.83.2/gh_2.83.2_windows_amd64.zip"}
+
 [[tools."github:AutoHotkey/AutoHotkey"]]
 version = "1.1.37.02"
 backend = "github:AutoHotkey/AutoHotkey"
+"platforms.linux-arm64" = { url = "https://github.com/AutoHotkey/AutoHotkey/releases/download/v1.1.37.02/AutoHotkey_1.1.37.02.zip", url_api = "https://api.github.com/repos/AutoHotkey/AutoHotkey/releases/assets/156978790"}
+"platforms.linux-x64" = { url = "https://github.com/AutoHotkey/AutoHotkey/releases/download/v1.1.37.02/AutoHotkey_1.1.37.02.zip", url_api = "https://api.github.com/repos/AutoHotkey/AutoHotkey/releases/assets/156978790"}
+"platforms.macos-arm64" = { url = "https://github.com/AutoHotkey/AutoHotkey/releases/download/v1.1.37.02/AutoHotkey_1.1.37.02.zip", url_api = "https://api.github.com/repos/AutoHotkey/AutoHotkey/releases/assets/156978790"}
+"platforms.macos-x64" = { url = "https://github.com/AutoHotkey/AutoHotkey/releases/download/v1.1.37.02/AutoHotkey_1.1.37.02.zip", url_api = "https://api.github.com/repos/AutoHotkey/AutoHotkey/releases/assets/156978790"}
 "platforms.windows-x64" = { checksum = "blake3:f199f4a8461ce75f5987ffc08a74bc388415f297784de53bbb7135d02ccf32b9", url = "https://github.com/AutoHotkey/AutoHotkey/releases/download/v1.1.37.02/AutoHotkey_1.1.37.02.zip", url_api = "https://api.github.com/repos/AutoHotkey/AutoHotkey/releases/assets/156978790"}
 
 [[tools.node]]
