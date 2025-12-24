@@ -8,6 +8,6 @@ Get the player's Y position on map
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerMapPosY()
 ```

@@ -16,6 +16,6 @@ Add a zone to the zone list.
 
 **Signature:**
 
-```ahk
+```autohotkey
 AddZone(sName, x1, y1, z1, x2, y2, z2)
 ```

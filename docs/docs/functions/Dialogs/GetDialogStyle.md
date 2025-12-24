@@ -8,6 +8,6 @@ Get the style/type of the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogStyle()
 ```

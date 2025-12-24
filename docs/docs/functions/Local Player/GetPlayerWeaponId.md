@@ -8,6 +8,6 @@ Retrieve the player's weapon ID
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerWeaponId()
 ```

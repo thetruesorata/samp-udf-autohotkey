@@ -16,6 +16,6 @@ Add a city to the city list.
 
 **Signature:**
 
-```ahk
+```autohotkey
 AddCity(sName, x1, y1, z1, x2, y2, z2)
 ```

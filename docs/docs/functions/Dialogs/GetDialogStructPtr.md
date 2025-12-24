@@ -13,6 +13,6 @@ higher-level functions to get specific dialog information.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogStructPtr()
 ```

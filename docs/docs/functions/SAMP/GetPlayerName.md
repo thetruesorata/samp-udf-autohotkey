@@ -8,6 +8,6 @@ Retrieves the player's name. This is directly read from memory.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerName()
 ```

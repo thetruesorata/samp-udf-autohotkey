@@ -8,6 +8,6 @@ Determine the vehicle type for the current vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleType()
 ```

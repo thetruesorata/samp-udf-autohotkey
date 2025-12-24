@@ -8,6 +8,6 @@ Retrieve the server's IP which the player is connected to.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetServerIp()
 ```

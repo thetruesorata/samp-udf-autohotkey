@@ -8,6 +8,6 @@ Check if the player has their chat open.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsInChat()
 ```

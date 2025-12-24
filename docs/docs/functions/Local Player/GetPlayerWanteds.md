@@ -8,6 +8,6 @@ Retrieve the player's wanted level
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerWanteds()
 ```

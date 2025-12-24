@@ -8,6 +8,6 @@ Get all lines from the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogLines()
 ```

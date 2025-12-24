@@ -8,6 +8,6 @@ Check if the player has their game paused (i.e., in the `ESC` menu)
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsPlayerInMenu()
 ```

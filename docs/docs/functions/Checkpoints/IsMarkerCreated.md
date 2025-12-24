@@ -8,6 +8,6 @@ Check whether a map marker currently exists.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsMarkerCreated()
 ```

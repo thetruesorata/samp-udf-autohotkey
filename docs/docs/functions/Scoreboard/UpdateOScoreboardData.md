@@ -20,6 +20,6 @@ the current tick count with the last refresh tick count plus an update interval 
 
 **Signature:**
 
-```ahk
+```autohotkey
 UpdateOScoreboardData()
 ```

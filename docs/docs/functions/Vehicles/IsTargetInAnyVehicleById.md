@@ -12,6 +12,6 @@ Check whether a player id is in any vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsTargetInAnyVehicleById(dwId)
 ```

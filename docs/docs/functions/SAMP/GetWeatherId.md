@@ -8,6 +8,6 @@ Retrieve the current weather ID.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetWeatherId()
 ```

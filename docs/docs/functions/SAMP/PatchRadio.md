@@ -10,6 +10,6 @@ This makes methods/functions to play and stop audio streams no-ops.
 
 **Signature:**
 
-```ahk
+```autohotkey
 PatchRadio()
 ```

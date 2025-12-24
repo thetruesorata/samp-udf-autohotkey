@@ -9,6 +9,6 @@ no messages or commands can be sent.
 
 **Signature:**
 
-```ahk
+```autohotkey
 BlockChatInput()
 ```

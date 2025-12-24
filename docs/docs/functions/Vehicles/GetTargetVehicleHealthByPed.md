@@ -12,6 +12,6 @@ Retrieve vehicle health for a PED's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleHealthByPed(dwPed)
 ```

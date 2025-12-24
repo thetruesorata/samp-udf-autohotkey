@@ -13,6 +13,6 @@ Calculate the Euclidean distance between two 3D positions.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDist(pos1, pos2)
 ```

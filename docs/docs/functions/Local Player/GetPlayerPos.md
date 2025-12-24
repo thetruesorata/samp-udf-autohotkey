@@ -20,6 +20,6 @@ we recommend using [`GetPlayerCoordinates`](GetPlayerCoordinates) instead.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ)
 ```

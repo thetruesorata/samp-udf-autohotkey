@@ -13,6 +13,6 @@ Call a callback function for every streamed-in player.
 
 **Signature:**
 
-```ahk
+```autohotkey
 CallFuncForAllStreamedInPlayers(cfunc, dist=0x7fffffff)
 ```

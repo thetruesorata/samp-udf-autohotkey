@@ -8,6 +8,6 @@ Get the number of lines in the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogLineCount()
 ```

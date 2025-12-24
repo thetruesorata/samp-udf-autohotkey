@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 virtualAllocEx(hProcess, dwSize, flAllocationType, flProtect)
 ```

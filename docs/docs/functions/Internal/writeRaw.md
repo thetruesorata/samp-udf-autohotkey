@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 writeRaw(hProcess, dwAddress, pBuffer, dwLen)
 ```

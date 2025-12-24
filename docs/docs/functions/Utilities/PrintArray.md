@@ -14,6 +14,6 @@ Recursively prints an array (including nested arrays) up to a specified depth.
 
 **Signature:**
 
-```ahk
+```autohotkey
 PrintArray(array, depth=5, indentLevel="")
 ```

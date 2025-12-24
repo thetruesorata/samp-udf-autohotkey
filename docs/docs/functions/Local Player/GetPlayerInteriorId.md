@@ -8,6 +8,6 @@ Retrieve the player's current interior ID
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerInteriorId()
 ```

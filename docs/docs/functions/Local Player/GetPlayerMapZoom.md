@@ -8,6 +8,6 @@ Get the player's map zoom level
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerMapZoom()
 ```

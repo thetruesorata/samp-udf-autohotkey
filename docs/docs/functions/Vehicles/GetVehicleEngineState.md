@@ -8,6 +8,6 @@ Retrieve whether the current vehicle's engine is on.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleEngineState()
 ```

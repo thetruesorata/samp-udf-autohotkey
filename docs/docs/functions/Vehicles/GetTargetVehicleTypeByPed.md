@@ -12,6 +12,6 @@ Determine the vehicle type for a PED's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleTypeByPed(dwPED)
 ```

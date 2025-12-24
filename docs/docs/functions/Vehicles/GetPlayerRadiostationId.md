@@ -8,6 +8,6 @@ Get the current radio station id for player vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerRadiostationId()
 ```

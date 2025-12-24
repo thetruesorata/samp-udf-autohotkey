@@ -12,6 +12,6 @@ Get the scoreboard player id for a given PED pointer.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetIdByPed(dwPed)
 ```

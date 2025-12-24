@@ -8,6 +8,6 @@ Retrieves the current health of the player's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleHealth()
 ```

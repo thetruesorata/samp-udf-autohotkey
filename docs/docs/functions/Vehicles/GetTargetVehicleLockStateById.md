@@ -12,6 +12,6 @@ Retrieve whether a player's vehicle (by id) is locked.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleLockStateById(dwId)
 ```

@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 callWithParams(hProcess, dwFunc, aParams, bCleanupStack = true)
 ```

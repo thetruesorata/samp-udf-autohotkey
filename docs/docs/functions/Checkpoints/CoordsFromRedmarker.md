@@ -8,6 +8,6 @@ Get the coordinates of the currently active map marker.
 
 **Signature:**
 
-```ahk
+```autohotkey
 CoordsFromRedmarker()
 ```

@@ -8,6 +8,6 @@ Check whether button 1 is currently selected in the dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsDialogButton1Selected()
 ```

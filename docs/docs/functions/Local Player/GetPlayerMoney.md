@@ -8,6 +8,6 @@ Retrieve the player's money
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerMoney()
 ```

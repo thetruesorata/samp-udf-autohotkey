@@ -8,6 +8,6 @@ Calculate the current vehicle speed (approx.) for the vehicle the player is in.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleSpeed()
 ```

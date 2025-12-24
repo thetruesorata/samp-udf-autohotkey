@@ -8,6 +8,6 @@ Return the PED pointer of the closest streamed-in player.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetClosestPlayerPed()
 ```

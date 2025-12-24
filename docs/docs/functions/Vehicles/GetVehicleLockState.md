@@ -8,6 +8,6 @@ Retrieve whether the current vehicle is locked.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleLockState()
 ```

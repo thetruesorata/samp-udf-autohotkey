@@ -12,6 +12,6 @@ Set the ID of the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 SetDialogId(id)
 ```

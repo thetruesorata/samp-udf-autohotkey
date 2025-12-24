@@ -12,6 +12,6 @@ Get a specific line from the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogLine(index)
 ```

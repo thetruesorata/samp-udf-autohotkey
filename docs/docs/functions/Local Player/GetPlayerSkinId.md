@@ -8,6 +8,6 @@ Retrieve the player's current skin ID
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerSkinId()
 ```

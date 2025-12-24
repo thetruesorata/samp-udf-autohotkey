@@ -8,6 +8,6 @@ Retrieve the current number of online players from current SA:MP server.
 
 **Signature:**
 
-```ahk
+```autohotkey
 CountOnlinePlayers()
 ```

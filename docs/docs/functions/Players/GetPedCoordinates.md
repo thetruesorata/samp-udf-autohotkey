@@ -18,6 +18,6 @@ In SA:MP, if the ped is not streamed in, this function will fail.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPedCoordinates(dwPED)
 ```

@@ -8,6 +8,6 @@ Return information about streamed-in players from the scoreboard.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetStreamedInPlayersInfo()
 ```

@@ -17,6 +17,6 @@ Show a dialog to the player.
 
 **Signature:**
 
-```ahk
+```autohotkey
 ShowDialog(style, caption, text, button1, button2 := "", id := 1)
 ```

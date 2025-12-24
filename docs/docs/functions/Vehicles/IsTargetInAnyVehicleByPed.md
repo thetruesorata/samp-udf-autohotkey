@@ -12,6 +12,6 @@ Check whether a given PED pointer is in any vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsTargetInAnyVehicleByPed(dwPED)
 ```

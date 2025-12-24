@@ -8,6 +8,6 @@ Retrieve the server's name which the player is connected to.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetServerName()
 ```

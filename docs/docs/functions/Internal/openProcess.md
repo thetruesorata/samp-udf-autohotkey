@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 openProcess(dwPID, dwRights = 0x1F0FFF)
 ```

@@ -16,6 +16,6 @@ Play an audio stream. Please note that
 
 **Signature:**
 
-```ahk
+```autohotkey
 PlayAudioStream(wUrl)
 ```

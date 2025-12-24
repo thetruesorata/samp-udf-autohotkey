@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 __unicodeToAnsi(wString, nLen = 0)
 ```

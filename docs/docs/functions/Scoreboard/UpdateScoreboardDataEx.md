@@ -8,6 +8,6 @@ Invoke SA:MP's internal function to update scoreboard data.
 
 **Signature:**
 
-```ahk
+```autohotkey
 UpdateScoreboardDataEx()
 ```

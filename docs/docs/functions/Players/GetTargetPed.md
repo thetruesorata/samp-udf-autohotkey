@@ -8,6 +8,6 @@ Get the PED id the player is currently targeting.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetPed()
 ```

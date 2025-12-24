@@ -12,6 +12,6 @@ Retrieve whether vehicle lights are on for a player's vehicle by id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleLightStateById(dwId)
 ```

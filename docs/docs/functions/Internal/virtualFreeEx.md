@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 virtualFreeEx(hProcess, lpAddress, dwSize, dwFreeType)
 ```

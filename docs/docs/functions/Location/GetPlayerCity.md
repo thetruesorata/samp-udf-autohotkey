@@ -14,6 +14,6 @@ Please refer to [`CalculateCity`](CalculateCity) as its return value is returned
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerCity()
 ```

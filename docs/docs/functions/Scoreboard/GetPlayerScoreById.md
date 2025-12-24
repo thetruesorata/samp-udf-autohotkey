@@ -12,6 +12,6 @@ Get player score by player's id. The data is retrieved from the server's scorebo
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerScoreById(dwId)
 ```

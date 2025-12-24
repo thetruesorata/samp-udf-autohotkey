@@ -20,6 +20,6 @@ As this is suffixed with `__`, it's possible that this function has been conside
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogLines__()
 ```

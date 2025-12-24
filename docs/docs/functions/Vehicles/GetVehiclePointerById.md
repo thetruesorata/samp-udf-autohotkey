@@ -12,6 +12,6 @@ Get vehicle pointer for a player id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehiclePointerById(dwId)
 ```

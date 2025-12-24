@@ -16,6 +16,6 @@ to [GameText Styles | open.mp](https://open.mp/de/docs/scripting/resources/gamet
 
 **Signature:**
 
-```ahk
+```autohotkey
 ShowGameText(wText, dwTime, dwTextstyle)
 ```

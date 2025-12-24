@@ -12,6 +12,6 @@ Retrieve the first color index for a PED's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleColor1ByPed(dwPED)
 ```

@@ -8,6 +8,6 @@ Disable the currently active checkpoint.
 
 **Signature:**
 
-```ahk
+```autohotkey
 DisableCheckpoint()
 ```

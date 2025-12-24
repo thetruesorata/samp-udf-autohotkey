@@ -13,6 +13,6 @@ Get vehicle pointer for a PED pointer.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehiclePointerByPed(dwPED)
 ```

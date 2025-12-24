@@ -9,6 +9,6 @@ Patch the radio functions to revert their original behavior.
 
 **Signature:**
 
-```ahk
+```autohotkey
 UnPatchRadio()
 ```

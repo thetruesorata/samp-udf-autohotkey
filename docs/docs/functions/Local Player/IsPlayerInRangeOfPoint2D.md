@@ -14,6 +14,6 @@ Check whether the player is within a certain range of a point in 2D space.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsPlayerInRangeOfPoint2D(_posX, _posY, _posRadius)
 ```

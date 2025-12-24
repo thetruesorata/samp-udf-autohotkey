@@ -12,6 +12,6 @@ Get the color of a player by player's id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerColor(playerId)
 ```

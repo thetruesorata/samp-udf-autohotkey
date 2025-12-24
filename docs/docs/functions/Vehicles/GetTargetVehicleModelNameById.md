@@ -12,6 +12,6 @@ Retrieve the vehicle model name for a player's vehicle by id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleModelNameById(dwId)
 ```

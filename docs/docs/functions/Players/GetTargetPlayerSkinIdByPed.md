@@ -12,6 +12,6 @@ Retrieve the skin id for a target PED pointer.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetPlayerSkinIdByPed(dwPED)
 ```

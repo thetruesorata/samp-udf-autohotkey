@@ -8,6 +8,6 @@ Retrieve the vehicle number plate for the current vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleNumberPlate()
 ```

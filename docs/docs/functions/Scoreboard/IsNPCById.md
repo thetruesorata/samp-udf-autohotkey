@@ -12,6 +12,6 @@ Check whether a player is an NPC by player's id. The data is retrieved from the 
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsNPCById(dwId)
 ```

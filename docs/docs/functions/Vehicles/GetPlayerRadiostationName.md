@@ -8,6 +8,6 @@ Get the current radio station name for the player vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerRadiostationName()
 ```

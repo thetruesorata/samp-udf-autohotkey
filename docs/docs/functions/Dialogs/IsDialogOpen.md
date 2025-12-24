@@ -8,6 +8,6 @@ Check whether a dialog is currently open.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsDialogOpen()
 ```

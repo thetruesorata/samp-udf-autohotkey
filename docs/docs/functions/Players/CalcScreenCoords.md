@@ -14,6 +14,6 @@ Convert world coordinates to screen coordinates.
 
 **Signature:**
 
-```ahk
+```autohotkey
 CalcScreenCoords(fX, fY, fZ)
 ```

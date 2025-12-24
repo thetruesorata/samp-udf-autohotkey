@@ -13,6 +13,6 @@ Read a byte from the specified address in the process memory.
 
 **Signature:**
 
-```ahk
+```autohotkey
 Memory_ReadByte(process_handle, address)
 ```

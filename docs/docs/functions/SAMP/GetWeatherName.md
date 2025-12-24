@@ -8,6 +8,6 @@ Retrieve the current weather's name.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetWeatherName()
 ```

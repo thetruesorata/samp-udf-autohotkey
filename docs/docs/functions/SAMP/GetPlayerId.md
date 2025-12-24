@@ -10,6 +10,6 @@ In the end, the ID is grabbed from the scoreboard.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerId()
 ```

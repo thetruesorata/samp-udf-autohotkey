@@ -12,6 +12,6 @@ Get player id by player's name. The data is retrieved from the server's scoreboa
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerIdByName(wName)
 ```

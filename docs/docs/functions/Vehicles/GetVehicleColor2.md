@@ -8,6 +8,6 @@ Retrieve the second color index of the current vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleColor2()
 ```

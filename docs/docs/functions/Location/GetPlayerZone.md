@@ -14,6 +14,6 @@ Please refer to [`CalculateZone`](CalculateZone) as its return value is returned
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerZone()
 ```

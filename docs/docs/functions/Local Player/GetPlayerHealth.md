@@ -8,6 +8,6 @@ Retrieve the player's health
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerHealth()
 ```

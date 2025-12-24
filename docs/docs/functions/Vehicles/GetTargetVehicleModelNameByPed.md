@@ -12,6 +12,6 @@ Retrieve the vehicle model name for a PED's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleModelNameByPed(dwPED)
 ```

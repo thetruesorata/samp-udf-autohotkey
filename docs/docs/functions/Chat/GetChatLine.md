@@ -13,6 +13,6 @@ Get a specific line from the SAMP chat log.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetChatLine(Line, ByRef Output, timestamp=0, color=0)
 ```

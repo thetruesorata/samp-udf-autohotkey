@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 readMem(hProcess, dwAddress, dwLen=4, type="UInt")
 ```

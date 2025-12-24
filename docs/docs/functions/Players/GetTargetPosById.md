@@ -12,6 +12,6 @@ Get the target player's position by scoreboard id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetPosById(dwId)
 ```

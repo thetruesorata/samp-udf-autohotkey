@@ -19,6 +19,6 @@ in combination with stopping and starting audio streams.</li>
 
 **Signature:**
 
-```ahk
+```autohotkey
 StopAudioStream()
 ```

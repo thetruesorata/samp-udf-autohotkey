@@ -12,6 +12,6 @@ Add a message to chat window (only visible for the local player)
 
 **Signature:**
 
-```ahk
+```autohotkey
 AddChatMessage(wText)
 ```

@@ -12,6 +12,6 @@ for available states.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerState()
 ```

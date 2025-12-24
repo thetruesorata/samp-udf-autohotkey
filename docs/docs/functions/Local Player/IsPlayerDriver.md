@@ -8,6 +8,6 @@ Check if the player is the driver of the vehicle they are in.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsPlayerDriver()
 ```

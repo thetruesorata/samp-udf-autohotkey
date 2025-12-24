@@ -12,6 +12,6 @@ Retrieve whether vehicle lights are on for a PED's vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleLightStateByPed(dwPED)
 ```

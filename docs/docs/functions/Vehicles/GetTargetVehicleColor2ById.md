@@ -12,6 +12,6 @@ Retrieve the second color index for a vehicle by player ID.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleColor2ById(dwId)
 ```

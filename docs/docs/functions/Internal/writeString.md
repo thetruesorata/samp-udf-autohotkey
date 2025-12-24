@@ -13,6 +13,6 @@ internal stuff
 
 **Signature:**
 
-```ahk
+```autohotkey
 writeString(hProcess, dwAddress, wString)
 ```

@@ -12,6 +12,6 @@ Retrieve vehicle health for a player's vehicle by id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleHealthById(dwId)
 ```

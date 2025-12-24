@@ -12,6 +12,6 @@ Retrieve whether a PED's vehicle is locked.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleLockStateByPed(dwPED)
 ```

@@ -16,6 +16,6 @@ While it may work for older SA:MP versions, this method won't likely work on `0.
 
 **Signature:**
 
-```ahk
+```autohotkey
 AntiCrash()
 ```

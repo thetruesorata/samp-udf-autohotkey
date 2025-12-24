@@ -15,6 +15,6 @@ Set a checkpoint at the specified coordinates with the given size.
 
 **Signature:**
 
-```ahk
+```autohotkey
 SetCheckpoint(fX, fY, fZ, fSize)
 ```

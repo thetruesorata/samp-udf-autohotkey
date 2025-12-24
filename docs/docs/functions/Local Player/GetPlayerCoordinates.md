@@ -8,6 +8,6 @@ Get the player's current coordinates.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerCoordinates()
 ```

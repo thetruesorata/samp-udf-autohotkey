@@ -8,6 +8,6 @@ Return the id of the closest streamed-in player.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetClosestPlayerId()
 ```

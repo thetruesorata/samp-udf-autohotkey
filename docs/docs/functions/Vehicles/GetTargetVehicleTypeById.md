@@ -12,6 +12,6 @@ Determine the vehicle type for a player's vehicle by id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleTypeById(dwId)
 ```

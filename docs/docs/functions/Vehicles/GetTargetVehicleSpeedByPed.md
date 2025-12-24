@@ -14,6 +14,6 @@ The `speedMultiplier` parameter can be adjusted per server to get more accurate 
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetVehicleSpeedByPed(dwPED, speedMultiplier := 1.43)
 ```

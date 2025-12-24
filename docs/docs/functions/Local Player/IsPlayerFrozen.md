@@ -8,6 +8,6 @@ Check if the player is frozen.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsPlayerFrozen()
 ```

@@ -8,6 +8,6 @@ Retrieve the model name for the current vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleModelName()
 ```

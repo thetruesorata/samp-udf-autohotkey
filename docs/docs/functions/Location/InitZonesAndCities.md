@@ -28,6 +28,6 @@ function is to search in code!
 
 **Signature:**
 
-```ahk
+```autohotkey
 InitZonesAndCities()
 ```

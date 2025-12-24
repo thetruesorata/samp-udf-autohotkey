@@ -8,6 +8,6 @@ Retrieve the player's armor
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPlayerArmor()
 ```

@@ -8,6 +8,6 @@ Get the text/content of the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogText()
 ```

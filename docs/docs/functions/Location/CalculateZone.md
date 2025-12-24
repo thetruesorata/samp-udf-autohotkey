@@ -22,6 +22,6 @@ This return value may change in future versions to more universal English term <
 
 **Signature:**
 
-```ahk
+```autohotkey
 CalculateZone(posX, posY, posZ)
 ```

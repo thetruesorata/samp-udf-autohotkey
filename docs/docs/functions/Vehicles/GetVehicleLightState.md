@@ -8,6 +8,6 @@ Retrieve whether vehicle lights are on for the current vehicle.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetVehicleLightState()
 ```

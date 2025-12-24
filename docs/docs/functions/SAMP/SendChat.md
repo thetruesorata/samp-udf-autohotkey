@@ -12,6 +12,6 @@ Send a chat message or command to the server
 
 **Signature:**
 
-```ahk
+```autohotkey
 SendChat(wText)
 ```

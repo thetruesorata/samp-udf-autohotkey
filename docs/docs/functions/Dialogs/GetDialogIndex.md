@@ -8,6 +8,6 @@ Get the index of the currently selected dialog line.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogIndex()
 ```

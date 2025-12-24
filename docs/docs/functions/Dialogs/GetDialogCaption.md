@@ -8,6 +8,6 @@ Get the caption/title of the currently opened dialog.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogCaption()
 ```

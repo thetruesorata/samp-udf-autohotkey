@@ -9,6 +9,6 @@ commands again.
 
 **Signature:**
 
-```ahk
+```autohotkey
 UnBlockChatInput()
 ```

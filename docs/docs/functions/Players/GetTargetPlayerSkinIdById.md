@@ -12,6 +12,6 @@ Retrieve the skin id for a player identified by scoreboard id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetTargetPlayerSkinIdById(dwId)
 ```

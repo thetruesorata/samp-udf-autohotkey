@@ -12,6 +12,6 @@ Get the game PED pointer for a scoreboard player id.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetPedById(dwId)
 ```

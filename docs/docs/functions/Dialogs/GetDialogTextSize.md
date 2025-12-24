@@ -12,6 +12,6 @@ Get the size of the dialog text at the text offset of a dialog struct.
 
 **Signature:**
 
-```ahk
+```autohotkey
 GetDialogTextSize(dwAddress)
 ```

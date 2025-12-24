@@ -18,6 +18,6 @@ for backward compatibility for now.
 
 **Signature:**
 
-```ahk
+```autohotkey
 IsPlayerFreezed()
 ```
