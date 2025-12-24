@@ -32,3 +32,5 @@ support for the latest SA:MP version `0.3.7-R5` at the time of writing.
 
 This library focuses `0.3.7-R5`, so it's possible that bugs are present in older versions (or `0.3.DL`) or new features
 are not properly tested in older version. If for whatever reason you need to use older `0.3.7` versions, be careful!
+
+:::
