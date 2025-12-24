@@ -15,8 +15,8 @@ const FeatureList: FeatureItem[] = [
     Svg: null,
     description: (
       <>
-        For basic player information query, this library provides you simple
-        getter functions which result you can use right away.
+        For basic player information query, this library provides simple
+        getter functions that return results you can use right away.
       </>
     ),
   },
@@ -25,8 +25,7 @@ const FeatureList: FeatureItem[] = [
     Svg: null,
     description: (
       <>
-        Use the up-to-date SA:MP version! No longer downgrade and neglect security concern
-        because of convenience!
+        Supports SA:MP 0.3.7-R5 — avoid downgrading and compromising security for convenience.
       </>
     ),
   },
