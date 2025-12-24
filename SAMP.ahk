@@ -1,4 +1,4 @@
-; #### SAMP UDF R18 ####
+; #### SAMP UDF R19 ####
 ; SAMP Version: 0.3.7, 0.3.7-R2, 0.3.7-R5, 0.3.DL
 ; Written by Chuck_Floyd 
 ; https://github.com/FrozenBrain
@@ -1321,7 +1321,7 @@ GetVehicleSpeed() {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhùht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhÔøΩht bzw. verringert
  
 	return fVehicleSpeed
 }
