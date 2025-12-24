@@ -5,6 +5,8 @@
     <p>
     <img src="https://img.shields.io/badge/AutoHotkey-345?logo=autohotkey&logoColor=fff&style=for-the-badge" alt="AutoHotkey Badge">
     <img src="https://img.shields.io/badge/Docusaurus-3ECC5F?logo=docusaurus&logoColor=fff&style=for-the-badge" href="https://thetruesorata.github.io/samp-udf-autohotkey" alt="Docusaurus Badge">
+    <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/thetruesorata/samp-udf-autohotkey/total?style=for-the-badge">
+    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/thetruesorata/samp-udf-autohotkey?display_name=tag&style=for-the-badge">
     </p>
 </div>
 
