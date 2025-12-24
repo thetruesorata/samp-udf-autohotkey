@@ -1,0 +1,23 @@
+name: Upload Release Assets
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  upload:
+    name: Upload SAMP.ahk to Release 
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Upload asset
+        run: |
+          tag=${{ github.event.release.tag_name }}
+
+          gh release upload "${tag}" ./SAMP.ahk
