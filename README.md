@@ -1,7 +1,7 @@
 <div style="text-align:center">
     <h1>SA:MP UDF for AutoHotkey v1.1</h1>
     <p>Native AHK bindings for SA:MP functions</p>
-    <p><em>A fork of <a href="https://github.com/SAMP-UDF/SAMP-UDF-for-AutoHotKey"></a>SAMP-UDF-for-AutoHotKey R18</a></em></p>
+    <p><em>A fork of <a href="https://github.com/SAMP-UDF/SAMP-UDF-for-AutoHotKey">SAMP-UDF-for-AutoHotKey R18</a></em></p>
     <p>
     <img src="https://img.shields.io/badge/AutoHotkey-345?logo=autohotkey&logoColor=fff&style=for-the-badge" alt="AutoHotkey Badge">
     <img src="https://img.shields.io/badge/Docusaurus-3ECC5F?logo=docusaurus&logoColor=fff&style=for-the-badge" href="https://thetruesorata.github.io/samp-udf-autohotkey" alt="Docusaurus Badge">
