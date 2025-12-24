@@ -264,11 +264,11 @@ function renderMarkdown(f: FunctionDeclaration): string {
 
   if (doc.example) {
     body += `**Example:**\n\n`;
-    body += "```ahk\n" + doc.example + "\n```\n\n";
+    body += "```autohotkey\n" + doc.example + "\n```\n\n";
   }
 
   body += `**Signature:**\n\n`;
-  body += "```ahk\n" + f.signature + "\n```\n";
+  body += "```autohotkey\n" + f.signature + "\n```\n";
 
   return front + body;
 }
