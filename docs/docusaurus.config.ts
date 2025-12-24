@@ -34,9 +34,10 @@ const config: Config = {
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
+
   },
 
-  plugins: ["@cmfcmf/docusaurus-search-local"],
+  plugins: ["@easyops-cn/docusaurus-search-local"],
 
   presets: [
     [
@@ -82,7 +83,6 @@ const config: Config = {
           position: 'left',
           label: 'Tutorial',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: `https://github.com/${organizationName}/${projectName}`,
           label: 'GitHub',
@@ -105,10 +105,6 @@ const config: Config = {
         {
           title: 'More',
           items: [
-            {
-              label: 'Blog',
-              to: '/blog',
-            },
             {
               label: 'GitHub',
               href: `https://github.com/${organizationName}/${projectName}`,
