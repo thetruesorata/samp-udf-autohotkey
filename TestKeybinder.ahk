@@ -114,3 +114,15 @@ else
 	BlockChatInput()
 bchat:=!bchat
 return
+
+Numpad9::
+closestId := GetClosestPlayerId()
+if (closestId == -1) {
+	AddChatMessage("{FFFF00}No closest player found!")
+	return
+}
+AddChatMessage("{27AFD5}Closest player: ")
+AddChatMessage("{27AFD5}> {FFFFFF}ID: " closestId)
+AddChatMessage("{27AFD5}> {FFFFFF}Name: " GetPlayerNameById(closestId))
+AddChatMessage("{27AFD5}> {FFFFFF}Pos: " PrintArray(GetTargetPosById(closestId)))
+return
