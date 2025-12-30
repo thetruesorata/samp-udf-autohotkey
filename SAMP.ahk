@@ -1321,7 +1321,7 @@ GetVehicleSpeed() {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhùht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ; Value is arbitrary and may differ across all servers
  
 	return fVehicleSpeed
 }
