@@ -81,7 +81,7 @@ global SAMP_SCOREBOARD_INFO_PTR 	        := [0x21A0B4, 0x21A0BC, 0x2AC9DC, 0x26E
 
 global SAMP_REMOTEPLAYERDATA_OFFSET         := [0x0, 0xC, 0x8, 0x10]
 global SAMP_REMOTEPLAYERDATA_ACTOR          := [0x0, 0x1C, 0x4, 0x1DD]
-global SAMP_REMOTEPLAYERDATA_PED            := [0x25C, 0x40, 0x40, 0x0]
+global SAMP_REMOTEPLAYERDATA_PED            := [0x25C, 0x40, 0x40, 0x2A4]
 global SAMP_REMOTEPLAYERDATA_HEALTH	        := [0x1BC, 0x1BC, 0x1B0, 0x1B0]
 global SAMP_REMOTEPLAYERDATA_ARMOR          := [0x1B8, 0x1AC, 0x1AC, 0x1AC]
 global SAMP_REMOTEPLAYERDATA_GLOBALPOS      := [0x2A4, 0x17C, 0x120, 0x17C]
@@ -1321,7 +1321,7 @@ GetVehicleSpeed() {
     fSpeedZ := readMem(hGTA, dwAddr + ADDR_VEHICLE_Z, 4, "float")
     
     fVehicleSpeed :=  sqrt((fSpeedX * fSpeedX) + (fSpeedY * fSpeedY) + (fSpeedZ * fSpeedZ))
-    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhÔøΩht bzw. verringert
+    fVehicleSpeed := (fVehicleSpeed * 100) * 1.43           ;Der Wert "1.43" ist meistens auf jedem Server anders. Die Geschwindigkeit wird somit erhùht bzw. verringert
  
 	return fVehicleSpeed
 }
