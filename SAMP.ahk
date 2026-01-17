@@ -36,6 +36,7 @@ global ERROR_CREATE_THREAD          := 13
 
 ; ######################### GTA addresses #########################
 global ADDR_ZONECODE                := 0xA49AD4      ;Player Zone
+global ADDR_POSITION_ROTATION_Z     := ADDR_CPED_PTR + 0x558 ;Player Z rotation
 global ADDR_POSITION_X              := 0xB6F2E4      ;Player X Position
 global ADDR_POSITION_Y              := 0xB6F2E8      ;Player Y Position
 global ADDR_POSITION_Z              := 0xB6F2EC      ;Player Z Position
@@ -3583,9 +3584,11 @@ GetPlayerCoordinates() {
 }
 
 /**
- * Get the player's current coordinates. Compared to [`GetPlayerCoordinates`](GetPlayerCoordinates),
+ * Get the player's current coordinates and Z rotation. Compared to [`GetPlayerCoordinates`](GetPlayerCoordinates),
  * this function assumes that the passed parameters are references (pass-by-reference). That means
  * that the function updates the passed variables directly.
+ *
+ * The Z rotation is queried by calling [`GetPlayerRotation`](GetPlayerRotation).
  *
  * :::note
  *
@@ -3598,9 +3601,10 @@ GetPlayerCoordinates() {
  * @param fX Variable to store X coordinate as float (pass-by-reference)
  * @param fY Variable to store Y coordinate as float (pass-by-reference)
  * @param fZ Variable to store Z coordinate as float (pass-by-reference)
+ * @param fR Variable to store Z rotation as float (pass-by-reference)
  * @returns `0` on success, `false` on failure
  */
-GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ) {
+GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ, ByRef fR) {
     if(!checkHandles())
         return 0
 
@@ -3622,7 +3626,31 @@ GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ) {
         return 0
     }
 
+    fR := GetPlayerRotation()
+    if (ErrorLevel) {
+        return 0
+    }
+
     ErrorLevel := ERROR_OK
+}
+
+/**
+ * Get the player's current Z rotation.
+ *
+ * @category Local Player
+ * @returns Z rotation as float, or `-1` on failure
+ */
+GetPlayerRotation() {
+    if (!checkHandles())
+        return -1
+
+    fRotation := readFloat(hGTA, ADDR_POSITION_ROTATION_MATRIX_BASE)
+    if (ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+
+    return fRotation
 }
 
 /**
