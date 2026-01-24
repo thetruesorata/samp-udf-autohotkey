@@ -78,8 +78,8 @@ return
 
 ;show some info about the local player, use some functions
 Numpad5::
-; if ( IsInChat() )
-;   	return
+if ( IsInChat() )
+  	return
 AddChatMessage("{FFFFFF}IP: {FF0000}" GetServerIp() ":" GetServerPort() "{FFFFFF}, Hostname: {FF0000}" GetServerName())
 AddChatMessage("{FFFFFF}Players: {FF0000}" CountOnlinePlayers())
 AddChatMessage("{FFFFFF}Name: {FF0000}" GetPlayerName())
@@ -88,6 +88,12 @@ AddChatMessage("{FFFFFF}Money: {FF0000}" GetPlayerMoney())
 AddChatMessage("{FFFFFF}Interior id: {FF0000}" GetPlayerInteriorId())
 pos := GetPlayerCoordinates()
 AddChatMessage("{FFFFFF}Zone: {FF0000}" CalculateZone(pos[1],pos[2],pos[3]) "{FFFFFF}, Stadt: {FF0000}" CalculateCity(pos[1],pos[2],pos[3]))
+GetPlayerPos(__posX, __posY, __posZ)
+AddChatMessage("{FFFFFF}Pos from GetPlayerPos(): {FF0000}" __posX ", " __posY ", " __posZ)
+GetPlayerPos(__posX, __posY, __posZ, __rot)
+AddChatMessage("{FFFFFF}Pos from by GetPlayerPos() with rotation: {FF0000}" __posX ", " __posY ", " __posZ ", " __rot)
+AddChatMessage("{FFFFFF}Rotation: {FF0000}" GetPlayerRotation())
+AddChatMessage("{FFFFFF}Compass: {FF0000}" GetPlayerFacingDirection())
 return
 
 ;shows a dialog-box
