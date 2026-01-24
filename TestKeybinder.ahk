@@ -80,7 +80,7 @@ return
 Numpad5::
 ; if ( IsInChat() )
 ;   	return
-AddChatMessage("{FFFFFF}IP: {FF0000}" GetServerIp() "{FFFFFF}, Hostname: {FF0000}" GetServerName())
+AddChatMessage("{FFFFFF}IP: {FF0000}" GetServerIp() ":" GetServerPort() "{FFFFFF}, Hostname: {FF0000}" GetServerName())
 AddChatMessage("{FFFFFF}Players: {FF0000}" CountOnlinePlayers())
 AddChatMessage("{FFFFFF}Name: {FF0000}" GetPlayerName())
 AddChatMessage("{FFFFFF}HP: {FF0000}" GetPlayerHealth() "{FFFFFF}, ARMOR: {FF0000}" GetPlayerArmor())
