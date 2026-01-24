@@ -74,7 +74,7 @@ global ADDR_SAMP_USERNAME                   := [0x219A6F, 0x219A77, 0x2AC187, 0x
 global ADDR_SAMP_SERVERNAME                 := [0x121, 0x11D, 0x131, 0x121]
 global ADDR_SAMP_SERVERIP                   := [0x20, 0x1C, 0x30, 0x20]
 global ADDR_SAMP_SERVERPORT                 := [0x225, 0x221, 0x235, 0x225]
-global ADDR_SAMP_VEHPOOL                    := [0x1C, 0xC, 0xC, 0x1C]
+global ADDR_SAMP_VEHPOOL                    := [0x1C, 0xC, 0xC, 0x0]
 
 ; SAMPAPI_VAR CScoreboard*& RefScoreboard()
 global SAMP_SCOREBOARD_INFO_PTR 	        := [0x21A0B4, 0x21A0BC, 0x2AC9DC, 0x26EB4C]
