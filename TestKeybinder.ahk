@@ -126,3 +126,8 @@ AddChatMessage("{27AFD5}> {FFFFFF}ID: " closestId)
 AddChatMessage("{27AFD5}> {FFFFFF}Name: " GetPlayerNameById(closestId))
 AddChatMessage("{27AFD5}> {FFFFFF}Pos: " PrintArray(GetTargetPosById(closestId)))
 return
+
+^v::
+AddChatMessage("{27AFD5}> Number plate: " GetVehicleNumberPlate())
+AddChatMessage("ErrorLevel: " ErrorLevel)
+return
