@@ -1112,6 +1112,83 @@ GetVehicleType() {
 }
 
 /**
+ * Returns the ID of the player's current vehicle he's sitting in.
+ *
+ * :::warning[Do not mix up with model ID!]
+ *
+ * This returns the "server"/instance ID of the vehicle. If you need its
+ * model ID, you must use [`GetVehicleModelId`](GetVehicleModelId) instead!
+ *
+ * :::
+ *
+ * @category Vehicles
+ * @returns ID (not model ID!) of the vehicle the player is sitting in, or `-1` on error
+ */
+GetVehicleId() {
+    if (!checkHandles()) {
+        return -1
+    }
+    
+    dwVehPtr := readDWORD(hGTA, ADDR_VEHICLE_PTR)
+
+    if (ErrorLevel || dwVehPtr ==  0) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+    
+    dwAddress := readDWORD(hGTA, dwSAMP + SAMP_INFO_OFFSET[sampVersion])
+
+    if (ErrorLevel || dwAddress == 0) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+    
+    dwAddress := readDWORD(hGTA, dwAddress + SAMP_PPOOLS_OFFSET[sampVersion])
+
+    if (ErrorLevel || dwAddress == 0) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+    
+    vehpool := readDWORD(hGTA, dwAddress + ADDR_SAMP_VEHPOOL[sampVersion])
+
+    if (ErrorLevel || vehpool == 0) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+
+    vehicleCount := readDWORD(hGTA, vehpool + 0x0)
+
+    Loop, % vehicleCount {
+        i := A_Index - 1
+
+        listed := readDWORD(hGTA, vehpool + 0x3074 + i*4)
+
+        if (ErrorLevel) {
+            ErrorLevel := ERROR_READ_MEMORY
+            return -1
+        }
+        
+        if (listed == 0) {
+            continue
+        }
+
+        vehPtr := readDWORD(hGTA, vehpool + 0x4FB4 + i*4)
+
+        if (ErrorLevel) {
+            ErrorLevel := ERROR_READ_MEMORY
+            return -1
+        }
+
+        if (vehPtr == dwVehPtr) {
+            return i
+        }
+    }
+
+    return -1
+}
+
+/**
  * Retrieve the vehicle model id for the current vehicle.
  *
  * @category Vehicles
