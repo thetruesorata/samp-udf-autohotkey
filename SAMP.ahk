@@ -2028,7 +2028,7 @@ GetVehiclePointerByPed(dwPED) {
  * @returns Vehicle pointer or `0` if none/failure
  */
 GetVehiclePointerById(dwId) {
-    if(!dwId)
+    if(dwId < 0 || dwId >= SAMP_PLAYER_MAX)
         return 0
 	if(!checkHandles())
         return 0
