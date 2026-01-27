@@ -193,7 +193,8 @@ global oScoreboardData                      := ""
 global iRefreshHandles                      := 0
 global iUpdateTick                          := 2500 ;time in ms, used for GetPlayerNameById etc. to refresh data
 
-global Pi := 4 * ATan(1)
+global PI           := 4 * ATan(1)
+global PI_IN_DEG    := 180.0
 
 /**
  * Check if SA:MP is loaded and chat is available
@@ -3639,8 +3640,8 @@ GetPlayerPos(ByRef fX, ByRef fY, ByRef fZ, ByRef fR := "") {
 }
 
 /**
- * Get the player's current Z rotation. The returning rotation is a Radian value between `-π < x <= π`, where
- * angle `x` starts at `0` when facing North, `-+π` when facing South, and counterclockwise rotation is positive.
+ * Get the player's current Z rotation. The returning rotation is value in Degree between `-180° < x <= 180°`, where
+ * angle `x` starts at `0` when facing North, `-+180°` when facing South, and counterclockwise rotation is positive.
  *
  * If you need an example usage, you can take a look at [`GetPlayerFacingDirection`](GetPlayerFacingDirection), which
  * returns a string representing the player's facing direction in compass style.
@@ -3664,6 +3665,8 @@ GetPlayerRotation() {
         return false
     }
 
+    fRotation := fRotation * PI_IN_DEG / PI
+
     return fRotation
 }
 
@@ -3685,10 +3688,10 @@ GetPlayerFacingDirection() {
         return "Unknown"
     }
 
-    sector := Pi/4 ; 1/8 of circle
+    sector := PI_IN_DEG/4 ; 1/8 of circle
     dirs := ["S", "SE", "E", "NE", "N", "NW", "W", "SW"]
 
-    _index := Mod(Floor((rot + Pi + sector/2) / sector), 8)
+    _index := Mod(Floor((rot + PI_IN_DEG + sector/2) / sector), 8)
 
     return dirs[_index + 1]
 }
