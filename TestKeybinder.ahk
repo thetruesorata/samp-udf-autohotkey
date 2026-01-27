@@ -5,6 +5,7 @@ SetWorkingDir %A_ScriptDir%
 #UseHook
 #NoEnv
 #SingleInstance force
+#IfWinActive, GTA:SA:MP
 #include %A_ScriptDir%\SAMP.ahk
 
 Hotkey, Enter, Off
@@ -103,13 +104,15 @@ return
 
 ;show some info about the current vehicle
 Numpad7::
-AddChatMessage("{FFFFFF}Vehicle Type:" GetVehicleType())
-AddChatMessage("{FFFFFF}Model:" GetVehicleModelId())
-AddChatMessage("{FFFFFF}Model Name:" GetVehicleModelName())
-AddChatMessage("{FFFFFF}Is Driver:" IsPlayerDriver())
-AddChatMessage("{FFFFFF}Light State:" GetVehicleLightState())
-AddChatMessage("{FFFFFF}Engine State:" GetVehicleEngineState())
-AddChatMessage("{FFFFFF}Door State:" GetVehicleLockState())
+AddChatMessage("{FFFFFF}Vehicle Type: {FF0000}" GetVehicleType())
+AddChatMessage("{FFFFFF}Model: {FF0000}" GetVehicleModelId())
+AddChatMessage("{FFFFFF}Model Name: {FF0000}" GetVehicleModelName())
+AddChatMessage("{FFFFFF}Is Driver: {FF0000}" IsPlayerDriver())
+AddChatMessage("{FFFFFF}Light State: {FF0000}" GetVehicleLightState())
+AddChatMessage("{FFFFFF}Engine State: {FF0000}" GetVehicleEngineState())
+AddChatMessage("{FFFFFF}Door State: {FF0000}" GetVehicleLockState())
+AddChatMessage("{FFFFFF}Vehicle ID: {FF0000}" GetVehicleId())
+AddChatMessage("{27AFD5}ErrorLevel: " ErrorLevel)
 return
 
 Numpad8::
