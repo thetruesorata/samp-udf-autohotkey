@@ -162,7 +162,6 @@ global SAMP_ISCORE_OFFSET                   := [0x24, 0x0, 0x0, 0x4]
 global SAMP_ISNPC_OFFSET                    := [0x4, 0x8, 0x4, 0x8]
 
 global SAMP_PLAYER_MAX                      := 1004
-global SAMP_VEHICLE_MAX                     := 2000
 
 
 ; ######################### Checkpoints #########################
@@ -1158,7 +1157,9 @@ GetVehicleId() {
         return -1
     }
 
-    Loop, % SAMP_VEHICLE_MAX {
+    vehicleCount := readDWORD(hGTA, vehpool + 0x0)
+
+    Loop, % vehicleCount + 1 {
         i := A_Index - 1
 
         listed := readDWORD(hGTA, vehpool + 0x3074 + i*4)
@@ -1492,9 +1493,10 @@ GetVehicleNumberPlate() {
         ErrorLevel := ERROR_READ_MEMORY
         return ""
     }
-    
-    Loop, % SAMP_VEHICLE_MAX
-    {
+
+    vehicleCount := readDWORD(hGTA, vehpool + 0x0)
+
+    Loop, % vehicleCount + 1 {
         i := A_Index-1
         
         listed := readDWORD(hGTA, vehpool + 0x3074 + i*4)
