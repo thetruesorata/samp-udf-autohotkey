@@ -831,6 +831,27 @@ GetPlayerWeaponName() {
 }
 
 /**
+ * Retrieve the player's equipped weapon slot (1 - 12)
+ *
+ * @category Local Player
+ * @returns The player's weapon slot as an integer, or -1 on failure
+ */
+GetPlayerWeaponSlot() {
+    if (!checkHandles())
+        return -1
+
+    slot := readMem(hGTA, 0xB7CDBC, 4, "int")
+
+    if (ErrorLevel) {
+        ErrorLevel := ERROR_READ_MEMORY
+        return -1
+    }
+
+    ErrorLevel := ERROR_OK
+    return slot
+}
+
+/**
  * Retrieve the player's state, e.g. on foot, driving, dead, ...
  * <p>
  * See [Player States | open.mp](https://open.mp/en/docs/scripting/resources/playerstates)
