@@ -46,6 +46,7 @@ global ADDR_CPED_ARMOROFF           := 0x548         ;Player Armour
 global ADDR_CPED_MONEY              := 0x0B7CE54     ;Player Money
 global ADDR_CPED_INTID              := 0xA4ACE8      ;Player Interior-ID
 global ADDR_CPED_SKINIDOFF          := 0x22          ;Player Skin-ID
+global ADDR_CPED_WEAPON_SLOT        := 0xB7CDBC      ;Player Current Weapon Slot
 ;
 global ADDR_VEHICLE_PTR             := 0xBA18FC      ;Vehicle CPED Pointer
 global ADDR_VEHICLE_HPOFF           := 0x4C0         ;Vehicle Health
@@ -840,7 +841,7 @@ GetPlayerWeaponSlot() {
     if (!checkHandles())
         return -1
 
-    slot := readMem(hGTA, 0xB7CDBC, 4, "int")
+    slot := readMem(hGTA, ADDR_CPED_WEAPON_SLOT, 4, "int")
 
     if (ErrorLevel) {
         ErrorLevel := ERROR_READ_MEMORY
