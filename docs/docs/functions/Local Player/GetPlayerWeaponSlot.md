@@ -2,7 +2,7 @@
 title: GetPlayerWeaponSlot
 ---
 
-Retrieve the player's currently equipped weapon slot (Pistols, Shotguns, Automatic Rifles, etc.)
+Retrieve the player's equipped weapon slot (1 - 12)
 
 **Returns:** The player's weapon slot as an integer, or -1 on failure
 
