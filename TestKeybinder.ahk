@@ -1,4 +1,8 @@
 ; https://github.com/paul-phoenix/SAMP-UDF-for-AutoHotKey/blob/2b8a567ad29550bfce9196c182f58fa85c0f4d78/SAMP.ahk
+#Requires AutoHotkey <2.0
+#Requires AutoHotkey 32-bit
+#Requires AutoHotkey ANSI
+
 SendMode Input
 SetWorkingDir %A_ScriptDir%
 #Warn

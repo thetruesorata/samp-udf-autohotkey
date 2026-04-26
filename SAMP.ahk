@@ -18,6 +18,10 @@
 ; Do not remove these lines.
 ; ####################
 
+#Requires AutoHotkey <2.0
+#Requires AutoHotkey 32-bit
+#Requires AutoHotkey ANSI
+
 ; ######################### Error levels #########################
 global ERROR_OK                     := 0
 global ERROR_PROCESS_NOT_FOUND      := 1
